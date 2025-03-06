@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { User } from "@/types/types";
 import { LoginApi } from "./api/auth/User";
-import ScaleLoader from "@/components/loader/ScaleLoader";
+//import ScaleLoader from "@/components/loader/ScaleLoader";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
