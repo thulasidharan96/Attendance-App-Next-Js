@@ -164,7 +164,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen p-10 bg-white md:p-8">
+    <div className="flex flex-row min-h-screen p-10 bg-white md:p-8">
       {/* Left Section with Background Image */}
       <motion.div
         className="hidden md:flex w-1/2 flex-col justify-center items-center relative px-4"
@@ -227,7 +227,7 @@ export default function Home() {
       <div className="w-full md:w-1/2 flex-col justify-between items-center">
         <div className="flex w-full justify-evenly items-center">
           <motion.p
-            className="text-purple1 text-9xl font-bold md:mt-10"
+            className="text-purple1 text-9xl font-bold"
             variants={ui}
             initial="hidden"
             animate="visible"
@@ -244,7 +244,7 @@ export default function Home() {
           animate="visible"
         >
           <motion.div
-            className="w-full max-w-sm md:max-w-md lg:max-w-lg mb-6"
+            className="w-full md:max-w-md max-w-lg mb-6"
             variants={itemVariants}
           >
             <div className="flex flex-row justify-center items-center bg-gray-300 p-1.5 rounded-lg">
@@ -283,7 +283,7 @@ export default function Home() {
           >
             <form
               onSubmit={onSubmit}
-              className="w-full max-w-sm md:max-w-md lg:max-w-lg space-y-4"
+              className="w-full md:max-w-md max-w-lg space-y-4"
             >
               <motion.div variants={itemVariants}>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
