@@ -164,7 +164,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row  md:min-h-screen p-10 bg-white md:p-8 border-8 border-red-800">
+    <div className="flex flex-col md:flex-row min-h-screen p-10 bg-white md:p-8">
       {/* Left Section with Background Image */}
       <motion.div
         className="hidden md:flex w-1/2 flex-col justify-center items-center relative px-4"
