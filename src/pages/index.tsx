@@ -164,7 +164,18 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen p-4 md:p-8 bg-white">
+    <div
+  style={{
+    display: "flex",
+    flexDirection: "row",
+    minHeight: "100vh",
+    padding: "1rem",
+    backgroundColor: "white",
+    border: "4px solid red", // Medium thickness red border
+  }}
+>
+
+
       {/* Left Section with Background Image */}
       <motion.div
         className="hidden md:flex w-full md:w-1/2 flex-col justify-center items-center relative px-4"
