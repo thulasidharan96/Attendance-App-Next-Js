@@ -434,11 +434,11 @@ export default function Home() {
                   Forgot Password?
                 </Link>
               )}
-              {isLoading && (
+              {/* {isLoading && (
                 <div className="flex justify-center items-center">
                   <ScaleLoader className="text-purple1" />
                 </div>
-              )}
+              )} */}
               <motion.button
                 type="submit"
                 className="w-full bg-purple1 text-white py-2 rounded-md hover:bg-purple1 transition duration-300 mt-2"
