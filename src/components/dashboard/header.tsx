@@ -33,7 +33,7 @@ export function DashboardHeader() {
     >
       <div className="flex w-full items-center justify-between">
         {/* Search Bar */}
-        <div className="w-full max-w-sm ml-12 md:ml-0">
+        <div className="w-full max-w-sm ml-12 md:ml-0 ">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
             <input
@@ -45,10 +45,10 @@ export function DashboardHeader() {
         </div>
 
         {/* Icons & Profile */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ">
           {/* Theme Toggle */}
           <button
-            className={`rounded-full p-2 transition-colors duration-300 ${themeStyles.text} ${themeStyles.hoverBg}`}
+            className={`rounded-full p-2 ml-2 transition-colors duration-300 ${themeStyles.text} ${themeStyles.hoverBg}`}
             onClick={() => setTheme(isDarkMode ? "light" : "dark")}
           >
             {isDarkMode ? (
