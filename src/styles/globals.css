@@ -6,6 +6,11 @@
   --font-mono: var(--font-geist-mono);
   --color-purple1: #b57edc;
   --color-lite1: #b57edc;
+  --screen-sm: 640px; /* Small screens */
+  --screen-md: 768px; /* Medium screens */
+  --screen-lg: 1024px; /* Large screens */
+  --screen-xl: 1280px; /* Extra large screens */
+  --screen-2xl: 1536px; /* 2XL screens */
 }
 
 /* Hide scrollbar for all elements */
