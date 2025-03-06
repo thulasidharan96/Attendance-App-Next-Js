@@ -164,10 +164,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-row min-h-screen p-10 bg-white md:p-8">
+    <div className="flex flex-col md:flex-row min-h-screen p-4 md:p-8 bg-white">
       {/* Left Section with Background Image */}
       <motion.div
-        className="hidden md:flex w-1/2 flex-col justify-center items-center relative px-4"
+        className="hidden md:flex w-full md:w-1/2 flex-col justify-center items-center relative px-4"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
@@ -224,10 +224,10 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <div className="w-full md:w-1/2 flex-col justify-between items-center">
+      <div className="w-full md:w-1/2 flex flex-col items-center">
         <div className="flex w-full justify-evenly items-center">
           <motion.p
-            className="text-purple1 text-9xl font-bold"
+            className="text-purple1 text-6xl md:text-9xl font-bold"
             variants={ui}
             initial="hidden"
             animate="visible"
