@@ -1,24 +1,117 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Define global CSS variables */
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-purple1: #b57edc;
-  --color-lite1: #b57edc;
-  --screen-sm: 640px; /* Small screens */
-  --screen-md: 768px; /* Medium screens */
-  --screen-lg: 1024px; /* Large screens */
-  --screen-xl: 1280px; /* Extra large screens */
-  --screen-2xl: 1536px; /* 2XL screens */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
-/* Hide scrollbar for all elements */
-* {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+@layer base {
+  :root {
+    /* Brand Colors */
+    --purple1: #b57edc;
+    --base-green: #3fd48a;
+    --base-green-light: #d9f6e8;
+    --base-green-dark: #1d955a;
+    --base-green-darkest: #2f3936;
+    --base-amber: #f97f51;
+    --base-amber2: #ffb900;
+    --base-amber3: #fbe6a6;
+    --base-blue: #2fbfde;
+    --base-gray: #e2e8f0;
+    --base-failed: #ff0069;
+    --base-pink: #ff80b4;
+
+    --background: #ffffff;
+    --foreground: #020617;
+    --border: #e4e4e7;
+    --primary: #1a1a1a;
+    --primary-foreground: #fafafa;
+    --secondary: #f4f4f4;
+    --secondary-foreground: #1a1a1a;
+    --heading-foreground: #2f3936;
+    --text-foreground: #020617;
+    --text-dropdown: #09090b;
+    --muted: #f4f4f4;
+    --muted-foreground: #64748b;
+    --accent: #f4f4f4;
+    --accent-foreground: #1a1a1a;
+
+    /* Sidebar specific colors */
+    --sidebar-icon: #1d955a;
+    --sidebar-icon-active: #3fd48a;
+    --sidebar-icon-hover: #3fd48a;
+    --sidebar-bg-hover: #94a3b81a;
+    --sidebar-bg-active: #2f3936;
+
+    /* Tab section colors */
+    --tab-background: #e1e1e1;
+    --tab-text: #334155;
+
+    --pie-ring-background: #eef0fa;
+  }
+
+  .dark {
+    --background: #000000;
+    --foreground: #fafafa;
+    --border: #52525b;
+    --primary: #fafafa;
+    --primary-foreground: #1a1a1a;
+    --secondary: #27272a;
+    --secondary-foreground: #fafafa;
+    --heading-foreground: #d1d5db;
+    --text-foreground: #e5e7eb;
+    --text-dropdown: #e4e4e7;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --accent: #27272a;
+    --accent-foreground: #fafafa;
+
+    /* Sidebar specific colors - same in dark mode for consistency */
+    --sidebar-icon: #1d955a;
+    --sidebar-icon-active: #3fd48a;
+    --sidebar-icon-hover: #3fd48a;
+    --sidebar-bg-hover: #94a3b81a;
+    --sidebar-bg-active: #2f3936;
+
+    /* Tab section colors */
+    /* --tab-background: #1f2937;
+    --tab-text: #e2e8f0; */
+
+    --pie-ring-background: #27272a;
+  }
 }
 
-*::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+@font-face {
+  font-family: "Iosevka Term Curly";
+  src: url("/fonts/Iosevka-term-curly/IosevkaTermCurly-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.monaco-editor {
+  font-family: "Iosevka Term Curly";
+  src: url("/fonts/Iosevka-term-curly/IosevkaTermCurly-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@keyframes rotate-360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-360 {
+  animation: rotate-360 1s linear;
 }
