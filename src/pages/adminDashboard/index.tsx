@@ -1,6 +1,5 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
-import { DashboardCharts } from "@/components/dashboard/charts";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { DashboardSidebar } from "@/components/dashboard/sidebar";
 
@@ -15,7 +14,6 @@ export default function AdminDashboardPage() {
           message="You have 27 new student added to your domain. Please reach out to the Head Teacher if you want them excluded from your domain."
         />
         <DashboardCards />
-        <DashboardCharts />
 
     </div>
   );
