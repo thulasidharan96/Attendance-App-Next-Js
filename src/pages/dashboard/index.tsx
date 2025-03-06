@@ -1,11 +1,9 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
-import { DashboardCharts } from "@/components/dashboard/charts";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { Layout } from "@/components/layout";
 
 export default function DashboardPage() {
-
   return (
     <Layout>
       <DashboardHeader />
@@ -19,9 +17,7 @@ export default function DashboardPage() {
         <div className="w-full">
           <DashboardCards />
         </div>
-        <div className="flex justify-between w-full">
-          <DashboardCharts />
-        </div>
+        <div className="flex justify-between w-full"></div>
       </div>
     </Layout>
   );
