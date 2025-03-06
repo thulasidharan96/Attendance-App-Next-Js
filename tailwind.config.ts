@@ -3,6 +3,13 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        sm: "640px", // Small screens (default)
+        md: "768px", // Medium screens (default)
+        lg: "1024px", // Large screens (default)
+        xl: "1280px", // Extra Large
+        "2xl": "1536px", // 2XL screens
+      },
       fontFamily: {
         iosevka: ["Iosevka Term Curly"],
       },
@@ -34,11 +41,11 @@ export default {
           "bg-active": "var(--sidebar-bg-active)",
         },
         purple1: {
-            DEFAULT: "var(--purple1)",
-            light: "var(--purple1-light)",
-            dark: "var(--purple1-dark)",
-            darkest: "var(--purple1-darkest)",
-          },
+          DEFAULT: "var(--purple1)",
+          light: "var(--purple1-light)",
+          dark: "var(--purple1-dark)",
+          darkest: "var(--purple1-darkest)",
+        },
         base: {
           green: {
             DEFAULT: "var(--base-green)",

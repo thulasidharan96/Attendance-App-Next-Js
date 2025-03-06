@@ -227,7 +227,7 @@ export default function Home() {
       <div className="w-full md:w-1/2 flex-col justify-between items-center">
         <div className="flex w-full justify-evenly items-center">
           <motion.p
-            className="text-purple1 text-9xl font-bold"
+            className="text-purple1 text-9xl font-bold md:mt-10"
             variants={ui}
             initial="hidden"
             animate="visible"
