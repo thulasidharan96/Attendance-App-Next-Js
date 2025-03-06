@@ -238,7 +238,7 @@ export default function Home() {
 
         {/* Right Section - Auth Form */}
         <motion.div
-          className="w-full min-h-3/4 flex flex-col items-center justify-center p-2 mt-2 md:p-2 bg-white rounded-lg"
+          className="w-full flex flex-col items-center justify-center p-2 mt-2 md:p-2 bg-white rounded-lg"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -250,7 +250,7 @@ export default function Home() {
             <div className="flex flex-row justify-center items-center bg-gray-300 p-1.5 rounded-lg">
               <motion.button
                 onClick={() => setIsSignUp(false)}
-                className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`flex-1 py-2 rounded-md text-sm font-sm transition-colors duration-300 ${
                   !isSignUp
                     ? "bg-purple1 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -263,7 +263,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 onClick={() => setIsSignUp(true)}
-                className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                className={`flex-1 py-2 rounded-md text-sm font-sm transition-colors duration-300 ${
                   isSignUp
                     ? "bg-purple1 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -286,7 +286,7 @@ export default function Home() {
               className="w-full md:max-w-md max-w-lg space-y-4"
             >
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-sm text-gray-700 mb-1">
                   Email Id
                 </label>
                 <motion.input
@@ -304,7 +304,7 @@ export default function Home() {
 
               <motion.div variants={itemVariants}>
                 <div className="flex justify-between items-center">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-sm text-gray-700 mb-1">
                     Password
                   </label>
                   <motion.div
@@ -391,7 +391,7 @@ export default function Home() {
                   animate="visible"
                   key="name-field"
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-sm text-gray-700 mb-1">
                     Name
                   </label>
                   <motion.input
@@ -411,7 +411,7 @@ export default function Home() {
                   animate="visible"
                   key="regNumber"
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-sm text-gray-700 mb-1">
                     Registration Number
                   </label>
                   <motion.input
