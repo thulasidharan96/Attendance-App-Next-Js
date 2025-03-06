@@ -164,28 +164,10 @@ export default function Home() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        minHeight: "100vh",
-        padding: "1rem",
-        backgroundColor: "white",
-        // Medium thickness red border
-      }}
-    >
+    <div className="flex flex-row min-h-screen p-10 bg-white md:p-8">
       {/* Left Section with Background Image */}
       <motion.div
-        style={{
-          display: "",
-          width: "100%",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "relative",
-          padding: "1rem",
-          border: "4px solid red",
-        }}
+        className="hidden md:flex w-1/2 flex-col justify-center items-center relative px-4"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
@@ -242,15 +224,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          border: "4px solid purple",
-        }}
-      >
+      <div className="w-full md:w-1/2 flex-col justify-between items-center">
         <div className="flex w-full justify-evenly items-center">
           <motion.p
             className="text-purple1 text-9xl font-bold"
