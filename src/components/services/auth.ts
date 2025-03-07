@@ -1,20 +1,19 @@
 import { remove } from "./store";
 
-export const isAuthenticated = (token: any) => {
+export const isAuthenticated = (token: string | null): boolean => {
   if (token) {
     window.location.href = "/validate";
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 
-export const LogOut = () => {
+export const LogOut = (): void => {
   remove();
   window.location.href = "/";
 };
 
-export const validate = () => {
+export const validate = (): void => {
   const data = localStorage.getItem("role");
   if (data === "admin") {
     window.location.href = "/admin";
