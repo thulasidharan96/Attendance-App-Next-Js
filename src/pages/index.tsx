@@ -191,7 +191,7 @@ export default function Home() {
               Seamless Collaboration
             </motion.p>
             <motion.p className="text-sm mt-2">
-              Believe you can, and you're halfway there.
+              Believe you can, and you&apos;re halfway there.{" "}
             </motion.p>
           </motion.div>
         </div>
