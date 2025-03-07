@@ -5,7 +5,15 @@ const LOGIN_URL = "https://rest-api-hp0n.onrender.com/user/login";
 // Login API
 export const LoginApi = async (email: string, password: string) => {
   const data = { email, password };
-  return await axios.post(LOGIN_URL, data);
+  try {
+    const response = await axios.post(LOGIN_URL, data);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    }
+    throw error;
+  }
 };
 
 const REGISTER_URL = "https://rest-api-hp0n.onrender.com/user/signup";
@@ -15,8 +23,16 @@ export const RegisterApi = async (
   email: string,
   password: string,
   name: string,
-  RegisterNumber: number
+  RegisterNumber: string
 ) => {
   const data = { email, password, name, RegisterNumber };
-  return await axios.post(REGISTER_URL, data);
+  try {
+    const response = await axios.post(REGISTER_URL, data);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 409) {
+      return error.response;
+    }
+    throw error;
+  }
 };

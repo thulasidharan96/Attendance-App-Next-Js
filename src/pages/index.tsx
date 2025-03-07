@@ -5,16 +5,23 @@ import Frame from "../assets/Frame.svg";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { User } from "@/types/types";
-import { LoginApi } from "./api/User";
+import { LoginApi, RegisterApi } from "./api/User";
 import ScaleLoader from "@/components/loader/ScaleLoader";
-import { store } from "@/components/services/store";
+import {
+  department,
+  name,
+  RegisterNumber,
+  role,
+  store,
+  userId,
+} from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<User>({
-    RegisterNumber: 0,
+    RegisterNumber: "",
     name: "",
     email: "",
     password: "",
@@ -67,59 +74,74 @@ export default function Home() {
     event.preventDefault(); // Prevent default form submission
 
     if (isSignUp) {
-      handleSignUp();
+      handleSignUp(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.RegisterNumber
+      );
     } else {
       handleSignIn(formData.email, formData.password);
     }
   };
 
-  const handleSignUp = async () => {
-    console.log(formData);
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.password ||
-      !formData.RegisterNumber
-    ) {
-      alert("Please enter all fields");
-      return;
-    }
+  //Registration
+  const handleSignUp = async (
+    email: string,
+    password: string,
+    name: string,
+    RegisterNumber: string
+  ) => {
+    try {
+      setIsLoading(true);
+      const response = await RegisterApi(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.RegisterNumber
+      );
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      alert("Please enter a valid email address");
-      return;
-    }
-
-    if (!formData.RegisterNumber.toString().startsWith("9533")) {
-      alert("Please enter a valid Register Number");
-      return;
-    }
-
-    setIsLoading(true);
-  };
-
-  const handleSignIn = async (email: string, password: string) => {
-    // alert("Sign In clicked");
-    if (email === "" || password === "") {
-      alert("Please enter email and password");
-      return;
-    }
-    setIsLoading(true);
-    const response = await LoginApi(email, password);
-    if (response.status === 200) {
-      const data = response.data;
-      store(data.token);
+      if (response.status === 200) {
+        alert("Registration successful");
+        window.location.href = "/";
+      } else if (response.status === 409) {
+        alert("User already exists");
+      }
+    } catch (error) {
+      alert("Registration failed. Please try again.");
+    } finally {
       setIsLoading(false);
-      console.log(data);
-    } else {
-      console.log("Login failed");
     }
   };
-  if (isAuthenticated()) {
-    window.location.href = "/dashboard";
-  }
 
+  //Login
+  const handleSignIn = async (email: string, password: string) => {
+    try {
+      setIsLoading(true);
+      const response = await LoginApi(email, password);
+
+      if (response?.status === 200) {
+        const data = response.data;
+        store(data.token);
+        role(data.role);
+        name(data.name);
+        RegisterNumber(data.RegisterNumber);
+        userId(data.id);
+        department(data.department);
+        // window.location.href = "/dashboard";
+        isAuthenticated(data.token);
+      } else if (response?.status === 401) {
+        alert("Invalid email or password");
+      } else {
+        alert("Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred during login");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -346,13 +368,16 @@ export default function Home() {
                   variants={slideVariants}
                   initial="hidden"
                   animate="visible"
-                  key="name-field"
                 >
                   <label className="block text-xs font-medium text-gray-700">
                     Name
                   </label>
                   <motion.input
                     type="text"
+                    id="name"
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your name"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
@@ -366,7 +391,6 @@ export default function Home() {
                   variants={slideVariants}
                   initial="hidden"
                   animate="visible"
-                  key="regNumber"
                 >
                   <label className="block text-xs font-medium text-gray-700">
                     Registration Number
@@ -374,7 +398,12 @@ export default function Home() {
                   <motion.input
                     type="text"
                     name="RegisterNumber"
-                    id="RegisterNumber"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        RegisterNumber: e.target.value,
+                      })
+                    }
                     className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your registration number"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}

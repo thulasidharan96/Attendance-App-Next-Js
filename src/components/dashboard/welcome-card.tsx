@@ -2,11 +2,11 @@ import StudentAvatar from "@/assets/Student_Avatar.svg";
 import Image from "next/image";
 
 interface WelcomeCardProps {
-  name: string;
   message: string;
+  name: string;
 }
 
-export function WelcomeCard({ name, message }: WelcomeCardProps) {
+export function WelcomeCard({ message, name }: WelcomeCardProps) {
   return (
     <div className="flex bg-purple1 justify-between rounded-lg min-h-[120px] p-4 items-center relative overflow-hidden">
       <div className="text-white ">
