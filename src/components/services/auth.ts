@@ -1,25 +1,32 @@
 import { remove } from "./store";
+import { useRouter } from "next/router";
 
 export const isAuthenticated = (token: string | null): boolean => {
-  if (token) {
-    window.location.href = "/validate";
-    return true;
+  if (!token) {
+    return false;
   }
-  return false;
+  return true;
 };
 
 export const LogOut = (): void => {
   remove();
-  window.location.href = "/";
+  // Using Next.js router for client-side navigation
+  const router = useRouter();
+  router.push("/");
 };
 
 export const validate = (): void => {
-  const data = localStorage.getItem("role");
-  if (data === "admin") {
-    window.location.href = "/admin";
-  } else if (data === "user") {
-    window.location.href = "/dashboard";
-  } else {
-    window.location.href = "/";
+  const role = localStorage.getItem("role");
+  const router = useRouter();
+
+  switch (role) {
+    case "admin":
+      router.push("/admin");
+      break;
+    case "user":
+      router.push("/dashboard");
+      break;
+    default:
+      router.push("/");
   }
 };
