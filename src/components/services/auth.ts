@@ -1,5 +1,4 @@
 import { remove } from "./store";
-import { useRouter } from "next/router";
 
 export const isAuthenticated = (token: string | null): boolean => {
   if (!token) {
@@ -10,23 +9,20 @@ export const isAuthenticated = (token: string | null): boolean => {
 
 export const LogOut = (): void => {
   remove();
-  // Using Next.js router for client-side navigation
-  const router = useRouter();
-  router.push("/");
+  window.location.href = "/";
 };
 
 export const validate = (): void => {
   const role = localStorage.getItem("role");
-  const router = useRouter();
 
   switch (role) {
     case "admin":
-      router.push("/admin");
+      window.location.href = "/admin";
       break;
     case "user":
-      router.push("/dashboard");
+      window.location.href = "/dashboard";
       break;
     default:
-      router.push("/");
+      window.location.href = "/";
   }
 };
