@@ -197,7 +197,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <div className="w-full md:w-1/2 flex flex-col mt-10 md:mt-0">
+      <div className="w-full md:w-1/2 flex flex-col mt-10 md:mt-0 p-4 md:p-0 m-2 md:m-0">
         {/* Logo */}
         <motion.p
           className="text-purple1 text-9xl font-bold text-center"
