@@ -5,8 +5,10 @@ import Frame from "../assets/Frame.svg";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { User } from "@/types/types";
-import { LoginApi } from "./api/auth/User";
+import { LoginApi } from "./api/User";
 import ScaleLoader from "@/components/loader/ScaleLoader";
+import { store } from "@/components/services/store";
+import { isAuthenticated } from "@/components/services/auth";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -107,12 +109,16 @@ export default function Home() {
     const response = await LoginApi(email, password);
     if (response.status === 200) {
       const data = response.data;
+      store(data.token);
       setIsLoading(false);
       console.log(data);
     } else {
       console.log("Login failed");
     }
   };
+  if (isAuthenticated()) {
+    window.location.href = "/dashboard";
+  }
 
   // Animation variants
   const containerVariants = {
@@ -164,93 +170,55 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-row min-h-screen p-10 bg-white md:p-8">
-      {/* Left Section with Background Image */}
-      <motion.div
-        className="hidden md:flex w-1/2 flex-col justify-center items-center relative px-4"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left Section - Background Image */}
+      <motion.div className="hidden md:flex w-full md:w-1/2 relative p-4">
         <div
-          className="absolute inset-0 bg-cover rounded-3xl flex flex-col justify-between p-6 overflow-hidden"
+          className="absolute inset-0 bg-cover rounded-xl m-3 flex flex-col justify-between p-6"
           style={{ backgroundImage: `url(${Frame.src})` }}
         >
-          <motion.div
-            className="text-white text-center mt-10"
-            initial={{ y: -30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <motion.h1
-              className="text-2xl font-bold"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
+          <motion.div className="text-white text-center space-y-2">
+            <motion.h1 className="text-2xl md:text-3xl font-bold">
               Welcome to SimpleFlow
             </motion.h1>
-            <motion.p
-              className="mt-2 text-sm text-gray-200"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
+            <motion.p className="text-sm md:text-base text-gray-200">
               Your Gateway to Effortless Management.
             </motion.p>
           </motion.div>
 
-          <motion.div
-            className="text-white text-center mb-10"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-          >
-            <motion.p
-              className="mt-4 font-semibold"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
+          <motion.div className="text-white text-center">
+            <motion.p className="text-lg md:text-xl font-semibold">
               Seamless Collaboration
             </motion.p>
-            <motion.p
-              className="text-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-            >
-              Believe you can, and you&apos;re halfway there.
+            <motion.p className="text-sm mt-2">
+              Believe you can, and you're halfway there.
             </motion.p>
           </motion.div>
         </div>
       </motion.div>
 
-      <div className="w-full md:w-1/2 flex-col justify-between items-center">
-        <div className="flex w-full justify-evenly items-center">
-          <motion.p
-            className="text-purple1 text-9xl font-bold"
-            variants={ui}
-            initial="hidden"
-            animate="visible"
-          >
-            U!
-          </motion.p>
-        </div>
-
+      <div className="w-full md:w-1/2 flex flex-col mt-10 md:mt-0">
+        {/* Logo */}
+        <motion.p
+          className="text-purple1 text-9xl font-bold text-center"
+          variants={ui}
+          initial="hidden"
+          animate="visible"
+        >
+          U!
+        </motion.p>
         {/* Right Section - Auth Form */}
         <motion.div
-          className="w-full flex flex-col items-center justify-center p-2 mt-2 md:p-2 bg-white rounded-lg"
+          className="w-full flex flex-col items-center p-2 mt-2 bg-white rounded-lg"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div
-            className="w-full md:max-w-md max-w-lg mb-6"
-            variants={itemVariants}
-          >
-            <div className="flex flex-row justify-center items-center bg-gray-300 p-1.5 rounded-lg">
+          <motion.div className="w-full max-w-xs mb-4" variants={itemVariants}>
+            <div className="flex justify-center bg-gray-300 p-1 rounded-lg">
               <motion.button
                 onClick={() => setIsSignUp(false)}
-                className={`flex-1 py-2 rounded-md text-sm font-sm transition-colors duration-300 ${
+                className={`flex-1 py-2 rounded-md text-xs font-medium transition-colors duration-300 ${
                   !isSignUp
                     ? "bg-purple1 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -263,7 +231,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 onClick={() => setIsSignUp(true)}
-                className={`flex-1 py-2 rounded-md text-sm font-sm transition-colors duration-300 ${
+                className={`flex-1 py-1 rounded-md text-xs font-medium transition-colors duration-300 ${
                   isSignUp
                     ? "bg-purple1 text-white"
                     : "bg-gray-200 text-gray-600"
@@ -278,15 +246,12 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            className="flex h-[400px] justify-center w-full"
+            className="flex justify-center w-full"
             variants={itemVariants}
           >
-            <form
-              onSubmit={onSubmit}
-              className="w-full md:max-w-md max-w-lg space-y-4"
-            >
+            <form onSubmit={onSubmit} className="w-full max-w-sm space-y-3">
               <motion.div variants={itemVariants}>
-                <label className="block text-sm font-sm text-gray-700 mb-1">
+                <label className="block text-xs font-medium text-gray-700">
                   Email Id
                 </label>
                 <motion.input
@@ -295,7 +260,7 @@ export default function Home() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="Enter your email"
                   whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -303,23 +268,15 @@ export default function Home() {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <div className="flex justify-between items-center">
-                  <label className="block text-sm font-sm text-gray-700 mb-1">
-                    Password
-                  </label>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    {/*Forgot Password Link*/}
-                  </motion.div>
-                </div>
+                <label className="block text-xs font-medium text-gray-700">
+                  Password
+                </label>
                 <motion.input
                   type="password"
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="Enter Password"
                   whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -391,12 +348,12 @@ export default function Home() {
                   animate="visible"
                   key="name-field"
                 >
-                  <label className="block text-sm font-sm text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-gray-700">
                     Name
                   </label>
                   <motion.input
                     type="text"
-                    className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your name"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -411,14 +368,14 @@ export default function Home() {
                   animate="visible"
                   key="regNumber"
                 >
-                  <label className="block text-sm font-sm text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-gray-700">
                     Registration Number
                   </label>
                   <motion.input
                     type="text"
                     name="RegisterNumber"
                     id="RegisterNumber"
-                    className="w-full px-3 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple1"
+                    className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your registration number"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -450,7 +407,7 @@ export default function Home() {
                 {isSignUp ? "Sign Up" : "Sign In"}
               </motion.button>
 
-              {(isSignUp || !isSignUp) && (
+              {isSignUp && (
                 <motion.p
                   key={isSignUp ? "signup-text" : "signin-text"} // Key forces re-render on state change
                   className="text-xs text-center text-gray-500 mt-4"

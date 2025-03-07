@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "../services/auth";
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
@@ -34,8 +35,7 @@ export function DashboardSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
-    console.log("Logout clicked");
-    alert("Logout clicked");
+    LogOut();
   };
 
   return (
