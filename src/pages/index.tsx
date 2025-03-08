@@ -278,7 +278,7 @@ export default function Home() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full bg-white px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="Enter your email"
                   whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -294,7 +294,7 @@ export default function Home() {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full bg-white px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="Enter Password"
                   whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -374,7 +374,7 @@ export default function Home() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-2 py-1 text-black border bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your name"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -400,7 +400,7 @@ export default function Home() {
                         RegisterNumber: e.target.value,
                       })
                     }
-                    className="w-full px-2 py-1 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-2 py-1 bg-white text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                     placeholder="Enter your registration number"
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}

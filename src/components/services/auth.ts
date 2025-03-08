@@ -10,7 +10,6 @@ export const isAuthenticated = (token: string) => {
 
 export const LogOut = (): void => {
   remove();
-  window.location.href = "/";
 };
 
 export const validate = (): void => {

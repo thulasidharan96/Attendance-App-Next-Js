@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut } from "../services/auth";
+import { useRouter } from "next/router";
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
@@ -34,8 +35,10 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  const router = useRouter();
   const handleLogout = () => {
     LogOut();
+    router.push("/");
   };
 
   return (
