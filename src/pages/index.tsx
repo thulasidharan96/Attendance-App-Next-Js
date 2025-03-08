@@ -95,10 +95,10 @@ export default function Home() {
     try {
       setIsLoading(true);
       const response = await RegisterApi(
-        formData.email,
-        formData.password,
-        formData.name,
-        formData.RegisterNumber
+       email,
+        password,
+        name,
+        RegisterNumber
       );
 
       if (response.status === 200) {
@@ -109,6 +109,7 @@ export default function Home() {
       }
     } catch (error) {
       alert("Registration failed. Please try again.");
+      console.error("Registration failed:", error);
     } finally {
       setIsLoading(false);
     }

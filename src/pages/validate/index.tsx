@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ScaleLoader from "@/components/loader/ScaleLoader";
 import { validate } from "@/components/services/auth";
 
-const index = () => {
+const Index = () => {
   useEffect(() => {
     validate();
   }, []);
@@ -14,4 +14,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
