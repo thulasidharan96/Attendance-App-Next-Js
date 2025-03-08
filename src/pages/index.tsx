@@ -94,12 +94,7 @@ export default function Home() {
   ) => {
     try {
       setIsLoading(true);
-      const response = await RegisterApi(
-       email,
-        password,
-        name,
-        RegisterNumber
-      );
+      const response = await RegisterApi(email, password, name, RegisterNumber);
 
       if (response.status === 200) {
         alert("Registration successful");
@@ -193,7 +188,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen bg-white flex flex-col md:flex-row">
       {/* Left Section - Background Image */}
       <motion.div className="hidden md:flex w-full md:w-1/2 relative p-4">
         <div
