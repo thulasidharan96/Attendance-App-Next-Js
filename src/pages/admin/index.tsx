@@ -1,20 +1,31 @@
+import { useEffect, useState } from "react";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
-import { DashboardSidebar } from "@/components/dashboard/sidebar";
+import { Layout } from "@/components/layout";
 
-export default function AdminDashboardPage() {
+export default function DashboardPage() {
+  const [name, setName] = useState("User!");
+
+  useEffect(() => {
+    setName(localStorage.getItem("name") || "User!");
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <DashboardSidebar />
+    <Layout>
       <DashboardHeader />
-      
-        <WelcomeCard
-          name="Ayodele Irepodum"
-          message="You have 27 new student added to your domain. Please reach out to the Head Teacher if you want them excluded from your domain."
-        />
-        <DashboardCards />
-
-    </div>
+      <div className="flex flex-wrap gap-4">
+        <div className="w-full">
+          <WelcomeCard
+            name={name}
+            message="Welcome to Admin dashboard. Here you can find all the information you need to manage."
+          />
+        </div>
+        <div className="w-full">
+          <DashboardCards />
+        </div>
+        <div className="flex justify-between w-full"></div>
+      </div>
+    </Layout>
   );
 }

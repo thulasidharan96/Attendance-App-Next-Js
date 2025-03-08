@@ -51,7 +51,7 @@ export function DashboardSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-purple1 text-white shadow-lg transition-transform duration-300 flex flex-col justify-between z-40 ${
+        className={`fixed top-0 left-0 h-full bg-purple1 text-white shadow-lg transition-transform duration-300 flex flex-col justify-between z-40 ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } md:relative md:flex`}
       >

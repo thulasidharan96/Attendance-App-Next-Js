@@ -1,10 +1,11 @@
 import { remove } from "./store";
 
-export const isAuthenticated = (token: string | null): boolean => {
-  if (!token) {
-    return false;
+export const isAuthenticated = (token: string) => {
+  if (token) {
+    window.location.href = "/validate";
+  } else {
+    window.location.href = "/";
   }
-  return true;
 };
 
 export const LogOut = (): void => {
@@ -23,6 +24,6 @@ export const validate = (): void => {
       window.location.href = "/dashboard";
       break;
     default:
-      window.location.href = "/";
+      window.location.href = "/dashboard";
   }
 };
