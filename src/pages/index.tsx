@@ -16,6 +16,7 @@ import {
   userId,
 } from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
+import Router from "next/router";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -124,8 +125,10 @@ export default function Home() {
         RegisterNumber(data.RegisterNumber);
         userId(data.id);
         department(data.department);
-        // window.location.href = "/dashboard";
         isAuthenticated(data.token);
+
+        // Use router.push instead of window.location.href
+        Router.push("/validate");
       } else if (response?.status === 401) {
         alert("Invalid email or password");
       } else {

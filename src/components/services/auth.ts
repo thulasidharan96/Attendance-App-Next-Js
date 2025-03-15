@@ -1,15 +1,23 @@
-import { remove } from "./store";
+import Router from "next/router";
 
 export const isAuthenticated = (token: string) => {
   if (token) {
-    window.location.href = "/validate";
+    return true;
   } else {
-    window.location.href = "/";
+    Router.push("/");
   }
 };
 
 export const LogOut = (): void => {
-  remove();
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.removeItem("name");
+  localStorage.removeItem("RegisterNumber");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("department");
+
+  // Redirect to login page
+  Router.push("/");
 };
 
 export const validate = (): void => {
@@ -17,12 +25,12 @@ export const validate = (): void => {
 
   switch (role) {
     case "admin":
-      window.location.href = "/admin";
+      Router.push("/admin");
       break;
     case "user":
-      window.location.href = "/dashboard";
+      Router.push("/dashboard");
       break;
     default:
-      window.location.href = "/dashboard";
+      Router.push("/dashboard");
   }
 };

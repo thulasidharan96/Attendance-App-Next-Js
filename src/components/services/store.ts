@@ -10,5 +10,3 @@ export const RegisterNumber = (value: string) =>
 export const name = (value: string) => localStorage.setItem("name", value);
 export const department = (value: string) =>
   localStorage.setItem("department", value);
-
-export const remove = () => localStorage.clear();
