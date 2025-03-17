@@ -1,5 +1,6 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { Layout } from "@/components/layout";
+import Image from "next/image";
 import React, { useState } from "react";
 
 const Index = () => {
@@ -36,7 +37,7 @@ const Index = () => {
             />
             <label htmlFor="avatar-upload" className="cursor-pointer">
               {avatar ? (
-                <img
+                <Image
                   src={avatar}
                   alt="Avatar"
                   className="w-16 h-16 rounded-full border"
@@ -71,5 +72,4 @@ const Index = () => {
     </Layout>
   );
 };
-
 export default Index;

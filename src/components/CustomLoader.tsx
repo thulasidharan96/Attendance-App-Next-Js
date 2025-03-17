@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
   const [fadeOut, setFadeOut] = useState(false);
@@ -43,12 +44,18 @@ const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
         {/* Logo with enhanced animation */}
         <div className="relative">
           <div className="absolute -inset-4 rounded-full bg-purple1/20 animate-pulse"></div>
-          <img
-            src="/image.svg"
-            alt="Logo"
+          <div
             className="w-36 h-36 mb-6 relative animate-bounce"
             style={{ animationDuration: "2s" }}
-          />
+          >
+            <Image
+              src="/image.svg"
+              alt="Logo"
+              width={144}
+              height={144}
+              priority
+            />
+          </div>
         </div>
 
         {/* Loading text */}
