@@ -3,12 +3,9 @@ import Image from "next/image";
 
 const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
   const [fadeOut, setFadeOut] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
-    const progressInterval = setInterval(() => {
-      setLoadingProgress((prev) => (prev >= 100 ? 100 : prev + 2));
-    }, 100); // Slower progress update
+    const progressInterval = setInterval(() => {}, 100); // Slower progress update
 
     setTimeout(() => setFadeOut(true), 3000); // Start fade-out after 3 seconds
     setTimeout(() => onFinish(), 3500); // Ensure a smooth transition
