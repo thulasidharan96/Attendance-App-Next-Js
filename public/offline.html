@@ -4,9 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Offline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>You are offline</h1>
-    <p>Please check your connection and try again.</p>
+  <body
+    class="flex items-center justify-center min-h-screen bg-gray-900 text-white"
+  >
+    <div
+      class="text-center p-8 bg-gray-800 rounded-2xl shadow-lg animate-bounce"
+    >
+      <svg
+        class="w-16 h-16 mx-auto text-red-500 animate-pulse"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 9v2m0 4h.01M4.93 4.93a10 10 0 0114.14 0m1.41 1.41a10 10 0 01-14.14 14.14m-1.41-1.41a10 10 0 0114.14-14.14"
+        />
+      </svg>
+      <h1 class="text-3xl font-bold mt-4 animate-fade-in">You are offline</h1>
+      <p class="mt-2 text-gray-400 animate-fade-in">
+        Please check your connection and try again.
+      </p>
+      <button
+        class="mt-6 px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-full shadow-lg transition duration-300 transform hover:scale-105"
+        onclick="location.reload()"
+      >
+        Retry
+      </button>
+    </div>
   </body>
 </html>
