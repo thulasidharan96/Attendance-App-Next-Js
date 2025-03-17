@@ -1,27 +1,31 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router"; // ✅ Use `useRouter` instead of `Router.push`
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { Layout } from "@/components/layout";
 import { location } from "@/components/services/location";
 import { isAuthenticated } from "@/components/services/auth";
-import Router from "next/router";
 
 export default function DashboardPage() {
   const [name, setName] = useState("User!");
+  const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("AuthToken") || "";
-    console.log(token);
-
-    if (isAuthenticated(token)) {
-      Router.push("/dashboard");
-    } else {
-      Router.push("/");
+    if (!isAuthenticated()) {
+      router.replace("/");
+      return;
     }
+
     setName(localStorage.getItem("name") || "User!");
-    location.tryGetLocation();
+
+    if (typeof location.tryGetLocation === "function") {
+      location.tryGetLocation().then((locData) => {
+        console.log("Location found!", locData);
+      });
+    }
   }, []);
+
   return (
     <Layout>
       <DashboardHeader />

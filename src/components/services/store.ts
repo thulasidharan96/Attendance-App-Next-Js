@@ -3,7 +3,6 @@ export const store = (token: string) =>
 
 export const getToken = () => localStorage.getItem("AuthToken");
 
-export const role = (value: string) => localStorage.setItem("role", value);
 export const userId = (value: string) => localStorage.setItem("userId", value);
 export const RegisterNumber = (value: string) =>
   localStorage.setItem("RegisterNumber", value);

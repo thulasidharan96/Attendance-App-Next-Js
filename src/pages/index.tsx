@@ -11,7 +11,6 @@ import {
   department,
   name,
   RegisterNumber,
-  role,
   store,
   userId,
 } from "@/components/services/store";
@@ -99,7 +98,7 @@ export default function Home() {
 
       if (response.status === 200) {
         alert("Registration successful");
-        window.location.href = "/";
+        Router.push("/");
       } else if (response.status === 409) {
         alert("User already exists");
       }
@@ -120,15 +119,15 @@ export default function Home() {
       if (response?.status === 200) {
         const data = response.data;
         store(data.token);
-        role(data.role);
         name(data.name);
         RegisterNumber(data.RegisterNumber);
         userId(data.id);
         department(data.department);
-        isAuthenticated(data.token);
-
-        // Use router.push instead of window.location.href
-        Router.push("/validate");
+        if (isAuthenticated()) {
+          Router.push("/validate");
+        } else {
+          alert("Login failed. Please try again.");
+        }
       } else if (response?.status === 401) {
         alert("Invalid email or password");
       } else {

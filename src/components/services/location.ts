@@ -1,4 +1,4 @@
-export const location: {
+interface LocationService {
   getCurrentLocation: (retries?: number) => Promise<GeolocationPosition>;
   formatLocation: (position: GeolocationPosition) => {
     latitude: number;
@@ -12,9 +12,11 @@ export const location: {
   };
   handleGeoError: (error: GeolocationPositionError) => string;
   tryGetLocation: () => Promise<ReturnType<
-    typeof location.formatLocation
+    LocationService["formatLocation"]
   > | null>;
-} = {
+}
+
+export const location: LocationService = {
   getCurrentLocation: (retries = 2): Promise<GeolocationPosition> => {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
@@ -24,8 +26,8 @@ export const location: {
 
       const options: PositionOptions = {
         enableHighAccuracy: true,
-        timeout: 10000, // Increased timeout for better results
-        maximumAge: 0, // Forces fresh location data
+        timeout: 10000,
+        maximumAge: 0,
       };
 
       navigator.geolocation.getCurrentPosition(
@@ -68,7 +70,7 @@ export const location: {
   },
 
   tryGetLocation: async (): Promise<ReturnType<
-    typeof location.formatLocation
+    LocationService["formatLocation"]
   > | null> => {
     try {
       const position = await location.getCurrentLocation();

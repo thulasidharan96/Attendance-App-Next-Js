@@ -1,15 +1,18 @@
 import Router from "next/router";
+import { jwtDecode } from "jwt-decode";
+import { getToken } from "./store";
 
-export const isAuthenticated = (token: string) => {
-  if (token) {
-    return true;
-  } else {
-    Router.push("/");
-  }
+interface DecodedToken {
+  role?: string;
+  exp?: number;
+}
+
+export const isAuthenticated = (): boolean => {
+  const token = getToken();
+  return !!token; // ✅ Simply return true/false, don't push a route
 };
 
 export const LogOut = (): void => {
-  localStorage.removeItem("authToken"); // Clear token
   localStorage.clear(); // Clear all local storage
   Router.push("/"); // Redirect to login page
 
@@ -20,22 +23,38 @@ export const LogOut = (): void => {
       window.history.pushState(null, "", window.location.href);
     };
   }, 0);
-  // Redirect to login page
-  Router.push("/");
 };
 
 export const validate = (): void => {
-  // const token = localStorage.getItem("authToken");
-  const role = localStorage.getItem("role");
+  const token = getToken();
 
-  switch (role) {
-    case "admin":
-      Router.push("/admin");
-      break;
-    case "user":
-      Router.push("/dashboard");
-      break;
-    default:
-      Router.push("/dashboard");
+  if (!token) {
+    console.error("No token found!");
+    Router.push("/");
+    return;
+  }
+
+  try {
+    const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+
+    if (!decoded.exp || Date.now() >= decoded.exp * 1000) {
+      console.error("Token has expired");
+      LogOut();
+      return;
+    }
+
+    switch (decoded.role) {
+      case "admin":
+        Router.push("/admin");
+        break;
+      case "user":
+        Router.push("/dashboard");
+        break;
+      default:
+        Router.push("/");
+    }
+  } catch (error) {
+    console.error("Invalid token:", error);
+    LogOut();
   }
 };
