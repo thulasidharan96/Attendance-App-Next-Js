@@ -16,7 +16,7 @@ function ScaleLoader({
   color = "#3fd48a",
   speedMultiplier = 1,
   cssOverride = {},
-  height = 35,
+  height = 20,
   width = 4,
   radius = 0,
   margin = 2,

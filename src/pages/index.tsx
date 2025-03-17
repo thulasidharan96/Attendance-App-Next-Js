@@ -422,20 +422,21 @@ export default function Home() {
                   Forgot Password?
                 </Link>
               )}
-              {isLoading && (
-                <div className="flex justify-center items-center">
-                  <ScaleLoader className="text-purple1" />
-                </div>
-              )}
               <motion.button
                 type="submit"
-                className="w-full bg-purple1 text-white py-2 rounded-md hover:bg-purple1 transition duration-300 mt-2"
+                className="w-full bg-purple1 text-white py-2 rounded-md hover:bg-purple1 transition duration-300 mt-2 flex justify-center items-center"
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
                 disabled={isLoading}
               >
-                {isSignUp ? "Sign Up" : "Sign In"}
+                {isLoading ? (
+                  <ScaleLoader className="text-gray-200" />
+                ) : isSignUp ? (
+                  "Sign Up"
+                ) : (
+                  "Sign In"
+                )}
               </motion.button>
 
               {isSignUp && (
