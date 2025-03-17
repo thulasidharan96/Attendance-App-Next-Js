@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router"; // ✅ Use `useRouter` instead of `Router.push`
+import Router from "next/router";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
@@ -9,11 +9,10 @@ import { isAuthenticated } from "@/components/services/auth";
 
 export default function DashboardPage() {
   const [name, setName] = useState("User!");
-  const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated()) {
-      router.replace("/");
+      Router.replace("/");
       return;
     }
 

@@ -20,12 +20,16 @@ export const LogOut = () => {
   sessionStorage.clear();
 
   // Detect if running as a PWA
-  function isPWA() {
+  function isPWA(): boolean {
+    const navigatorStandalone = (
+      window.navigator as Navigator & { standalone?: boolean }
+    ).standalone;
     return (
       window.matchMedia("(display-mode: standalone)").matches ||
-      (window.navigator as any).standalone
+      navigatorStandalone === true
     );
   }
+
   // Unregister service worker to clear old cached pages (Optional)
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -35,7 +39,7 @@ export const LogOut = () => {
 
   // Redirect user to home (`/`)
   if (isPWA()) {
-    location.replace("/"); // Ensure full reload in PWA mode
+    location.replace("/"); // Full page reload in PWA mode
   } else {
     Router.replace("/"); // Use Router.replace to avoid back navigation
   }
@@ -43,7 +47,7 @@ export const LogOut = () => {
   // Prevent back navigation
   setTimeout(() => {
     window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
+    window.onpopstate = () => {
       window.history.pushState(null, "", window.location.href);
     };
   }, 500); // Small delay ensures redirect is processed first
