@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Frame from "../assets/Frame.svg";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -188,6 +188,12 @@ export default function Home() {
       },
     },
   };
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      Router.push("/validate");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-white flex flex-col md:flex-row">
