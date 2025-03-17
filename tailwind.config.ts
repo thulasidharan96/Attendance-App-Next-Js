@@ -11,7 +11,7 @@ export default {
         "2xl": "1536px", // 2XL screens
       },
       fontFamily: {
-        iosevka: ["Iosevka Term Curly"],
+        sans: ["Inter", "sans-serif"],
       },
       colors: {
         background: "var(--background)",

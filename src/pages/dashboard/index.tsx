@@ -20,11 +20,6 @@ export default function DashboardPage() {
     } else {
       Router.push("/");
     }
-    if (auth) {
-      Router.push("/dashboard");
-    } else {
-      Router.push("/");
-    }
     setName(localStorage.getItem("name") || "User!");
     location.tryGetLocation();
   }, []);
