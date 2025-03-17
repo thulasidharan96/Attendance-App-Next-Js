@@ -9,18 +9,23 @@ export const isAuthenticated = (token: string) => {
 };
 
 export const LogOut = (): void => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("role");
-  localStorage.removeItem("name");
-  localStorage.removeItem("RegisterNumber");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("department");
+  localStorage.removeItem("authToken"); // Clear token
+  localStorage.clear(); // Clear all local storage
+  Router.push("/"); // Redirect to login page
 
+  // Prevent user from navigating back
+  setTimeout(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+    };
+  }, 0);
   // Redirect to login page
   Router.push("/");
 };
 
 export const validate = (): void => {
+  // const token = localStorage.getItem("authToken");
   const role = localStorage.getItem("role");
 
   switch (role) {

@@ -200,7 +200,7 @@ export default function Home() {
         >
           <motion.div className="text-white text-center space-y-2">
             <motion.h1 className="text-2xl md:text-3xl font-bold">
-              Welcome to SimpleFlow
+              Welcome to AttendApp
             </motion.h1>
             <motion.p className="text-sm md:text-base text-gray-200">
               Your Gateway to Effortless Management.
@@ -445,7 +445,7 @@ export default function Home() {
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                 >
                   By {isSignUp ? "signing up" : "signing in"}, you agree to
-                  SimpleFlow&apos;s{" "}
+                  AttendApp&apos;s{" "}
                   <Link
                     href="/terms"
                     className="text-purple-600 hover:underline"
