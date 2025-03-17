@@ -6,21 +6,11 @@ const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
-    // Animate loading progress from 0 to 100
     const progressInterval = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval);
-          return 100;
-        }
-        return prev + 4; // Increment by 4% each time
-      });
+      setLoadingProgress((prev) => (prev >= 100 ? 100 : prev + 4));
     }, 80);
 
-    // Start fade-out after 2s
     setTimeout(() => setFadeOut(true), 2000);
-
-    // Remove after 2.5s
     setTimeout(() => onFinish(), 2500);
 
     return () => clearInterval(progressInterval);
@@ -28,7 +18,7 @@ const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
 
   return (
     <div
-      className={`fixed inset-0 flex flex-col items-center justify-center bg-cover bg-center transition-opacity duration-500 ${
+      className={`fixed inset-0 flex flex-col items-center justify-center bg-cover bg-center transition-opacity duration-700 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
       style={{
@@ -37,57 +27,37 @@ const CustomLoader = ({ onFinish }: { onFinish: () => void }) => {
         backgroundPosition: "center",
       }}
     >
-      {/* Overlay with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple1-darkest/70 to-background/90 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 to-gray-900/90 z-0"></div>
 
-      <div className="relative z-10 flex flex-col items-center">
-        {/* Logo with enhanced animation */}
-        <div className="relative">
-          <div className="absolute -inset-4 rounded-full bg-purple1/20 animate-pulse"></div>
-          <div
-            className="w-36 h-36 mb-6 relative animate-bounce"
-            style={{ animationDuration: "2s" }}
-          >
-            <Image
-              src="/image.svg"
-              alt="Logo"
-              width={144}
-              height={144}
-              priority
-            />
+      <div className="relative z-10 flex flex-col items-center max-w-md w-full px-4">
+        <div className="relative mb-8">
+          {/* Glow effect behind logo */}
+          <div className="absolute -inset-4 rounded-full bg-purple-500/30 animate-pulse"></div>
+
+          {/* Logo container with proper aspect ratio */}
+          <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden">
+            <div className="absolute inset-0 animate-[spin_15s_linear_infinite]">
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/40 to-transparent animate-pulse"></div>
+            </div>
+
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                src="/image.png"
+                alt="Logo"
+                width={120}
+                height={120}
+                className="object-contain max-w-full max-h-full"
+                priority
+              />
+            </div>
           </div>
         </div>
 
-        {/* Loading text */}
-        <h2 className="text-2xl font-iosevka text-white mb-4 tracking-wider">
-          <span className="animate-pulse">Loading</span>
-          <span className="inline-flex space-x-1 ml-1">
-            {[0, 1, 2].map((dot) => (
-              <span
-                key={dot}
-                className="animate-bounce"
-                style={{ animationDelay: `${dot * 0.2}s` }}
-              >
-                .
-              </span>
-            ))}
-          </span>
-        </h2>
-
-        {/* Progress bar */}
-        <div className="w-64 h-2 bg-gray-200/30 rounded-full mb-6 overflow-hidden">
+        {/* Progress bar with enhanced styling */}
+        <div className="w-full sm:w-64 h-3 bg-gray-300/20 rounded-full mb-6 overflow-hidden shadow-[0_0_10px_rgba(168,85,247,0.5)]">
           <div
-            className="h-full bg-gradient-to-r from-purple1 to-base-blue rounded-full transition-all duration-300 ease-out"
+            className="h-full bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${loadingProgress}%` }}
-          ></div>
-        </div>
-
-        {/* Loader Animation - enhanced */}
-        <div className="relative w-16 h-16">
-          <div className="absolute inset-0 border-4 border-purple1 border-t-transparent rounded-full animate-spin"></div>
-          <div
-            className="absolute inset-1 border-4 border-base-blue border-b-transparent rounded-full animate-spin"
-            style={{ animationDirection: "reverse", animationDuration: "0.8s" }}
           ></div>
         </div>
       </div>

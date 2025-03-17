@@ -4,8 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/favicon.svg" sizes="any" />
-        <link rel="icon" type="image/svg" href="/image.svg" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="icon" type="image/png" href="/image.png" />
       </Head>
       <body className="antialiased">
         <Main />
