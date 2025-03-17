@@ -13,18 +13,40 @@ export const isAuthenticated = (): boolean => {
 };
 
 export const LogOut = () => {
+  // Clear authentication data
   document.cookie =
     "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
   localStorage.clear();
-  Router.push("/");
+  sessionStorage.clear();
 
-  // Prevent user from navigating back
+  // Detect if running as a PWA
+  function isPWA() {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone
+    );
+  }
+  // Unregister service worker to clear old cached pages (Optional)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((registration) => registration.unregister());
+    });
+  }
+
+  // Redirect user to home (`/`)
+  if (isPWA()) {
+    location.replace("/"); // Ensure full reload in PWA mode
+  } else {
+    Router.replace("/"); // Use Router.replace to avoid back navigation
+  }
+
+  // Prevent back navigation
   setTimeout(() => {
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
       window.history.pushState(null, "", window.location.href);
     };
-  }, 0);
+  }, 500); // Small delay ensures redirect is processed first
 };
 
 export const validate = (): void => {
