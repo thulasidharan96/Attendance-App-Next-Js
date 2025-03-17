@@ -12,9 +12,11 @@ export const isAuthenticated = (): boolean => {
   return !!token; // ✅ Simply return true/false, don't push a route
 };
 
-export const LogOut = (): void => {
-  localStorage.clear(); // Clear all local storage
-  Router.push("/"); // Redirect to login page
+export const LogOut = () => {
+  document.cookie =
+    "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  localStorage.clear();
+  Router.push("/");
 
   // Prevent user from navigating back
   setTimeout(() => {

@@ -1,7 +1,11 @@
-export const store = (token: string) =>
-  localStorage.setItem("AuthToken", token);
+import * as cookie from "cookie";
 
-export const getToken = () => localStorage.getItem("AuthToken");
+export const getToken = () => {
+  if (typeof document === "undefined") return null; // Ensure this runs only on the client
+
+  const cookies = cookie.parse(document.cookie);
+  return cookies.auth_token || null;
+};
 
 export const userId = (value: string) => localStorage.setItem("userId", value);
 export const RegisterNumber = (value: string) =>

@@ -11,7 +11,6 @@ import {
   department,
   name,
   RegisterNumber,
-  store,
   userId,
 } from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
@@ -118,7 +117,6 @@ export default function Home() {
 
       if (response?.status === 200) {
         const data = response.data;
-        store(data.token);
         name(data.name);
         RegisterNumber(data.RegisterNumber);
         userId(data.id);
