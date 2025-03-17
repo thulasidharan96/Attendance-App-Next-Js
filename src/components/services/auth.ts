@@ -50,7 +50,7 @@ export const LogOut = () => {
     window.onpopstate = () => {
       window.history.pushState(null, "", window.location.href);
     };
-  }, 500); // Small delay ensures redirect is processed first
+  }, 10); // Small delay ensures redirect is processed first
 };
 
 export const validate = (): void => {
