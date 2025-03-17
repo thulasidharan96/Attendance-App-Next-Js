@@ -13,9 +13,8 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // ✅ Correct import
 import { LogOut } from "../services/auth";
-import { useRouter } from "next/router";
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
@@ -33,12 +32,12 @@ const sidebarItems = [
 
 export function DashboardSidebar() {
   const pathname = usePathname();
+  const router = useRouter(); // ✅ Use correct `useRouter` from `next/navigation`
   const [isOpen, setIsOpen] = useState(false);
 
-  const router = useRouter();
   const handleLogout = () => {
     LogOut();
-    router.push("/");
+    router.push("/"); // ✅ Uses client-side navigation correctly
   };
 
   return (
@@ -58,9 +57,6 @@ export function DashboardSidebar() {
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } md:relative md:flex`}
       >
-        <br></br>
-        <br></br>
-        <br></br>
         {/* Sidebar Navigation */}
         <nav className="flex-1 px-6 py-6">
           <ul className="space-y-2">
@@ -73,6 +69,7 @@ export function DashboardSidebar() {
                       ? "bg-white text-purple-700"
                       : "hover:bg-purple-800"
                   }`}
+                  onClick={() => setIsOpen(false)} // ✅ Close sidebar on navigation
                 >
                   <item.icon className="h-5 w-5" />
                   <span>{item.title}</span>
