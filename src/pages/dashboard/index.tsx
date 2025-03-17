@@ -9,14 +9,13 @@ import Router from "next/router";
 
 export default function DashboardPage() {
   const [name, setName] = useState("User!");
-  const [auth, setAuth] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("AuthToken") || "";
     console.log(token);
 
     if (isAuthenticated(token)) {
-      setAuth(true);
+      Router.push("/dashboard");
     } else {
       Router.push("/");
     }
@@ -36,7 +35,6 @@ export default function DashboardPage() {
         <div className="w-full">
           <DashboardCards />
         </div>
-        <div className="flex justify-between w-full"></div>
       </div>
     </Layout>
   );
