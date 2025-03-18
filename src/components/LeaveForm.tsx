@@ -33,7 +33,7 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div className=" p-6 rounded-lg shadow-lg w-96">
         <h2 className="text-xl font-semibold mb-4">Leave Application</h2>
 
         <label className="block text-sm font-medium text-gray-700">
