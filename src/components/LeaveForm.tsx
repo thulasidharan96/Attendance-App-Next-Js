@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTheme } from "next-themes";
+import { useThemeStyles } from "@/components/Hook/useThemeStyles";
 
 interface LeaveFormProps {
   isOpen: boolean;
@@ -7,12 +7,11 @@ interface LeaveFormProps {
 }
 
 const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
-  const { resolvedTheme } = useTheme(); // Get current theme
+  const { themeStyles } = useThemeStyles();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [reason, setReason] = useState("");
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
   const handleSubmit = () => {
@@ -20,12 +19,10 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
       alert("Please fill in all fields.");
       return;
     }
-
     if (fromDate > toDate) {
       alert("To Date must be after From Date.");
       return;
     }
-
     console.log({ fromDate, toDate, reason });
     alert("Leave Application Submitted!");
     onClose();
@@ -33,18 +30,10 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  // Set dynamic styles based on theme
-  const isDarkMode = resolvedTheme === "dark";
-  const formBg = isDarkMode ? "bg-gray-800" : "bg-white";
-  const textColor = isDarkMode ? "text-white" : "text-gray-900";
-  const inputBg = isDarkMode
-    ? "bg-gray-700 border-gray-600 text-white"
-    : "bg-gray-100 border-gray-300 text-gray-900";
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
       <div
-        className={`p-6 rounded-lg shadow-lg w-96 transition-colors ${formBg} ${textColor}`}
+        className={`p-6 rounded-lg shadow-lg w-96 transition-colors ${themeStyles.background} ${themeStyles.text}`}
       >
         <h2 className="text-xl font-semibold mb-4">Leave Application</h2>
 
@@ -54,7 +43,7 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
           value={fromDate}
           min={today}
           onChange={(e) => setFromDate(e.target.value)}
-          className={`w-full p-2 border rounded-lg mb-3 transition-colors ${inputBg}`}
+          className={`w-full p-2 border rounded-lg mb-3 transition-colors ${themeStyles.inputBg}`}
         />
 
         <label className="block text-sm font-medium">To Date</label>
@@ -63,7 +52,7 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
           value={toDate}
           min={fromDate || today}
           onChange={(e) => setToDate(e.target.value)}
-          className={`w-full p-2 border rounded-lg mb-3 transition-colors ${inputBg}`}
+          className={`w-full p-2 border rounded-lg mb-3 transition-colors ${themeStyles.inputBg}`}
         />
 
         <label className="block text-sm font-medium">Reason</label>
@@ -72,7 +61,7 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ isOpen, onClose }) => {
           placeholder="Enter reason"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          className={`w-full p-2 border rounded-lg mb-4 transition-colors ${inputBg}`}
+          className={`w-full p-2 border rounded-lg mb-4 transition-colors ${themeStyles.inputBg}`}
         />
 
         <div className="flex justify-end gap-2">
