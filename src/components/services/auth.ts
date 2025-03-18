@@ -20,37 +20,38 @@ export const LogOut = () => {
   sessionStorage.clear();
 
   // Detect if running as a PWA
-  function isPWA(): boolean {
-    const navigatorStandalone = (
-      window.navigator as Navigator & { standalone?: boolean }
-    ).standalone;
+  const isPWA = (): boolean => {
     return (
       window.matchMedia("(display-mode: standalone)").matches ||
-      navigatorStandalone === true
+      (window.navigator as Navigator & { standalone?: boolean }).standalone ===
+        true
     );
-  }
+  };
 
-  // Unregister service worker to clear old cached pages (Optional)
+  // Unregister service workers to clear cached pages (Ensures fresh login state)
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
       registrations.forEach((registration) => registration.unregister());
     });
   }
 
-  // Redirect user to home (`/`)
-  if (isPWA()) {
-    location.replace("/"); // Full page reload in PWA mode
-  } else {
-    Router.replace("/"); // Use Router.replace to avoid back navigation
-  }
-
-  // Prevent back navigation
-  setTimeout(() => {
+  // Prevent back navigation (More effective on mobile browsers)
+  const disableBackNavigation = () => {
     window.history.pushState(null, "", window.location.href);
-    window.onpopstate = () => {
+    window.addEventListener("popstate", () => {
       window.history.pushState(null, "", window.location.href);
-    };
-  }, 0); // Small delay ensures redirect is processed first
+    });
+  };
+
+  // Redirect user based on PWA or mobile web mode
+  setTimeout(() => {
+    if (isPWA()) {
+      location.replace("/"); // Full page reload to ensure fresh session
+    } else {
+      Router.replace("/"); // Prevents back navigation in browser history
+    }
+    disableBackNavigation(); // Ensures the back button doesn't navigate to previous state
+  }, 50); // Slight delay ensures proper execution order
 };
 
 export const validate = (): void => {
