@@ -46,7 +46,7 @@ export function DashboardHeader() {
         </div>
 
         {/* Icons & Profile */}
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-3 ">
           <LocationButton />
           {/* Theme Toggle */}
           <button
