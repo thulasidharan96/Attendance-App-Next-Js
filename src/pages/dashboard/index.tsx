@@ -4,7 +4,6 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { Layout } from "@/components/layout";
-import { location } from "@/components/services/location";
 import { isAuthenticated } from "@/components/services/auth";
 
 export default function DashboardPage() {
@@ -18,11 +17,7 @@ export default function DashboardPage() {
 
     setName(localStorage.getItem("name") || "User!");
 
-    if (typeof location.tryGetLocation === "function") {
-      location.tryGetLocation().then((locData) => {
-        console.log("Location found!", locData);
-      });
-    }
+    
   }, []);
 
   return (

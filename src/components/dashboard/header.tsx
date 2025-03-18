@@ -1,8 +1,9 @@
 "use client";
 
-import { MoonIcon, SunIcon, Bell, Search, User } from "lucide-react";
+import { MoonIcon, SunIcon, Bell, Search, User, MapPin } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import LocationButton from "../ui/locationBtn";
 
 export function DashboardHeader() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -46,6 +47,7 @@ export function DashboardHeader() {
 
         {/* Icons & Profile */}
         <div className="flex items-center gap-4 ">
+          <LocationButton />
           {/* Theme Toggle */}
           <button
             className={`rounded-full p-2 ml-2 transition-colors duration-300 ${themeStyles.text} ${themeStyles.hoverBg}`}
