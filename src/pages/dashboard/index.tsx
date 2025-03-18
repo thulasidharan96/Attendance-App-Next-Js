@@ -16,8 +16,6 @@ export default function DashboardPage() {
     }
 
     setName(localStorage.getItem("name") || "User!");
-
-    
   }, []);
 
   return (
