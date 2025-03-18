@@ -13,8 +13,9 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation"; // ✅ Correct import
+import { usePathname, useRouter } from "next/navigation";
 import { LogOut } from "../services/auth";
+import ScaleLoader from "@/components/loader/ScaleLoader";
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
@@ -31,13 +32,16 @@ const sidebarItems = [
 ];
 
 export function DashboardSidebar() {
+  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
-  const router = useRouter(); // ✅ Use correct `useRouter` from `next/navigation`
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = () => {
-    LogOut();
-    router.push("/"); // ✅ Uses client-side navigation correctly
+  const handleLogout = async () => {
+    setIsLoading(true);
+    await LogOut(); // Ensure async logout completes before updating state
+    setIsLoading(false);
+    router.push("/");
   };
 
   return (
@@ -47,18 +51,19 @@ export function DashboardSidebar() {
         className="md:hidden fixed top-6 left-6 z-50 p-3 rounded-lg bg-purple-600 text-white"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle sidebar"
+        aria-expanded={isOpen}
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full bg-purple1 text-white shadow-lg transition-transform duration-300 flex flex-col justify-between z-40 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-purple1 text-white shadow-lg transition-transform duration-300 flex flex-col justify-between z-40 ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } md:relative md:flex`}
       >
         {/* Sidebar Navigation */}
-        <nav className="flex-1 px-6 py-6">
+        <nav className="flex-1 px-6 py-24">
           <ul className="space-y-2">
             {sidebarItems.map((item) => (
               <li key={item.href}>
@@ -67,9 +72,9 @@ export function DashboardSidebar() {
                   className={`flex items-center gap-3 rounded-lg px-4 py-2 text-lg transition-colors duration-200 ${
                     pathname === item.href
                       ? "bg-white text-purple-700"
-                      : "hover:bg-purple-800"
+                      : "hover:bg-purple-700"
                   }`}
-                  onClick={() => setIsOpen(false)} // ✅ Close sidebar on navigation
+                  onClick={() => setIsOpen(false)}
                 >
                   <item.icon className="h-5 w-5" />
                   <span>{item.title}</span>
@@ -82,10 +87,11 @@ export function DashboardSidebar() {
         {/* Logout Button */}
         <div className="p-6">
           <button
-            className="bg-purple-800 hover:bg-purple-900 p-3 w-full rounded-lg text-lg transition-transform duration-200 hover:scale-105"
+            className="bg-purple-700 hover:bg-purple-800 p-3 w-full rounded-lg text-lg transition-transform duration-200 hover:scale-105 flex items-center justify-center"
             onClick={handleLogout}
+            disabled={isLoading}
           >
-            Log Out
+            {isLoading ? <ScaleLoader className="text-gray-200" /> : "Logout"}
           </button>
         </div>
       </aside>

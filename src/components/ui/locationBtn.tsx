@@ -71,14 +71,14 @@ export default function LocationButton() {
   const getIconColor = () => {
     switch (locationStatus) {
       case "nearby":
-        return "text-green-500";
+        return "text-green-500 ml-2";
       case "far":
-        return "text-red-500";
+        return "text-red-500 ml-2";
       case "checking":
-        return "text-blue-500";
+        return "text-blue-500 ml-2";
       case "unknown":
       default:
-        return "text-gray-500";
+        return "text-gray-500 ml-2";
     }
   };
 

@@ -1,9 +1,11 @@
 "use client";
 
-import { MoonIcon, SunIcon, Bell, Search, User } from "lucide-react";
+import { MoonIcon, SunIcon, Bell, Search } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import LocationButton from "../ui/locationBtn";
+import Image from "next/image";
+import Frame from "@/assets/Student_Avatar.svg";
 
 export function DashboardHeader() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -13,7 +15,7 @@ export function DashboardHeader() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null; // Prevent hydration issues
+  if (!mounted) return null; // ✅ Prevent hydration issues
 
   const isDarkMode = resolvedTheme === "dark";
 
@@ -34,7 +36,7 @@ export function DashboardHeader() {
     >
       <div className="flex w-full items-center justify-between">
         {/* Search Bar */}
-        <div className="w-full max-w-sm ml-12 md:ml-0 ">
+        <div className="w-full max-w-sm ml-12 md:ml-0">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
             <input
@@ -46,8 +48,9 @@ export function DashboardHeader() {
         </div>
 
         {/* Icons & Profile */}
-        <div className="flex items-center gap-3 ">
+        <div className="flex items-center gap-3">
           <LocationButton />
+
           {/* Theme Toggle */}
           <button
             className={`rounded-full p-2 ml-2 transition-colors duration-300 ${themeStyles.text} ${themeStyles.hoverBg}`}
@@ -70,8 +73,14 @@ export function DashboardHeader() {
           </button>
 
           {/* Profile Icon */}
-          <div className="relative h-8 w-8 overflow-hidden rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-            <User className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+          <div className="relative h-8 w-8 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+            <Image
+              src={Frame}
+              alt="User Avatar"
+              width={32}
+              height={32}
+              className="object-cover"
+            />
           </div>
         </div>
       </div>
