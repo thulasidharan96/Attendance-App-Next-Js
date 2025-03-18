@@ -1,6 +1,6 @@
 "use client";
 
-import { MoonIcon, SunIcon, Bell, Search, User, MapPin } from "lucide-react";
+import { MoonIcon, SunIcon, Bell, Search, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import LocationButton from "../ui/locationBtn";
