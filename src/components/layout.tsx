@@ -16,7 +16,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className={`flex min-h-screen ${inter.className}`}>
         <div className="flex w-full h-screen overflow-hidden">
           <DashboardSidebar />
-          <main className="flex-1 m-2 lg:m-2 p-2">{children}</main>
+          <main className="flex-1 m-2 lg:m-2 p-2 overflow-y-auto">
+            {children}
+          </main>
         </div>
       </div>
     </ThemeProvider>
