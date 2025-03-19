@@ -8,7 +8,7 @@ interface WelcomeCardProps {
 
 export function WelcomeCard({ message, name }: WelcomeCardProps) {
   return (
-    <div className="flex bg-purple1 justify-between rounded-lg min-h-[120px] p-4 items-center relative overflow-hidden">
+    <div className="flex bg-purple1 justify-between rounded-lg min-h-[120px] p-4 items-center relative md:sticky overflow-hidden">
       <div className="text-white ">
         <h2 className="text-xl md:text-2xl font-bold">Welcome back, {name}</h2>
         <p className="max-w-[280px] md:max-w-lg text-sm md:text-base">

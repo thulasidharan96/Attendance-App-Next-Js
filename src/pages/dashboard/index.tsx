@@ -60,7 +60,7 @@ export default function DashboardPage() {
 
   const attendanceButtonClass = useMemo(
     () =>
-      `flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium shadow-md transition-all text-white w-full md:w-auto ${
+      `flex items-center justify-center px-3 py-3 rounded-xl font-medium shadow-md transition-all text-white w-full md:w-auto ${
         locationStatus === "nearby"
           ? "bg-green-600 hover:bg-green-700"
           : locationStatus === "far"
@@ -73,20 +73,29 @@ export default function DashboardPage() {
   return (
     <Layout>
       <DashboardHeader />
-      <div className="flex flex-wrap gap-4">
-        <div className="w-full">
-          <WelcomeCard
-            name={name}
-            message="Welcome to your dashboard. Here you can find all the information you need to manage."
-          />
+      <div className="flex flex-col md:flex-wrap gap-4 min-h-screen">
+        {/* Welcome Card */}
+        <WelcomeCard
+          name={name}
+          message="Welcome to your dashboard. Here you can find all the information you need to manage."
+        />
+
+        {/* Buttons Section */}
+        <div className="flex flex-row items-center justify-between gap-4 w-full">
+          <button
+            onClick={handleAttendance}
+            className={`${attendanceButtonClass} w-full md:w-auto px-4 py-2 text-lg`}
+          >
+            Mark Attendance
+          </button>
+          <button className="flex items-center justify-center px-4 py-2 rounded-xl font-medium shadow-md transition-all text-white w-full md:w-auto bg-gray-600 hover:bg-gray-700">
+            Hello
+          </button>
         </div>
+
+        {/* Dashboard Cards */}
         <div className="w-full">
           <DashboardCards />
-        </div>
-        <div>
-          <button onClick={handleAttendance} className={attendanceButtonClass}>
-            Attendance
-          </button>
         </div>
       </div>
     </Layout>
