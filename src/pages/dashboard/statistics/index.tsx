@@ -21,6 +21,8 @@ import {
   Radar,
 } from "recharts";
 import { Card } from "@/components/ui/card";
+import Router from "next/router";
+import { isAuthenticated } from "@/components/services/auth";
 
 const chartData = [
   {
@@ -82,6 +84,10 @@ const Index = () => {
   const [chartSize, setChartSize] = useState({ width: 400, height: 250 });
 
   useEffect(() => {
+    if (!isAuthenticated()) {
+      Router.replace("/");
+      return;
+    }
     const handleResize = () => {
       setChartSize({ width: window.innerWidth < 768 ? 300 : 400, height: 250 });
     };

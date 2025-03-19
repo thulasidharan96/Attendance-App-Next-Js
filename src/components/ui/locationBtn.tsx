@@ -2,15 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { MapPin } from "lucide-react";
 import { location } from "../services/location";
 
-const FIXED_LOCATION = {
+export const FIXED_LOCATION = {
   latitude: 8.764166,
   longitude: 78.134836,
 };
+export const PROXIMITY_THRESHOLD = 5000; // 5000 meters = 5km
+export const EARTH_RADIUS = 6371e3; // Earth radius in meters
 
-const PROXIMITY_THRESHOLD = 5000; // 5000 meters = 5km
-const EARTH_RADIUS = 6371e3; // Earth radius in meters
-
-const getDistance = (
+export const getDistance = (
   lat1: number,
   lon1: number,
   lat2: number,

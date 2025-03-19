@@ -1,7 +1,9 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { Layout } from "@/components/layout";
+import { isAuthenticated } from "@/components/services/auth";
 import Image from "next/image";
-import React, { useState } from "react";
+import Router from "next/router";
+import React, { useEffect, useState } from "react";
 
 const Index = () => {
   const [name, setName] = useState("John Doe");
@@ -17,6 +19,15 @@ const Index = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      Router.replace("/");
+      return;
+    }
+
+    setName(localStorage.getItem("name") || "User!");
+  }, []);
 
   return (
     <Layout>

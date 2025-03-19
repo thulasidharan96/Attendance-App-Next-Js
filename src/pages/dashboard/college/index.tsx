@@ -1,5 +1,7 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { Layout } from "@/components/layout";
+import { isAuthenticated } from "@/components/services/auth";
+import Router from "next/router";
 import React, { useEffect, useState } from "react";
 
 interface NewsItem {
@@ -14,6 +16,11 @@ const Index = () => {
 
   // Simulate fetching news from an API
   useEffect(() => {
+    if (!isAuthenticated()) {
+      Router.replace("/");
+      return;
+    }
+
     const initialNews: NewsItem[] = [
       {
         id: 1,

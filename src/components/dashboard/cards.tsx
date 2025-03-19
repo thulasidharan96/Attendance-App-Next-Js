@@ -1,4 +1,4 @@
-import { Bus, GraduationCap, MapPin, UserCheck } from "lucide-react";
+import { Bus, GraduationCap, GitGraph, UserCheck } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -12,14 +12,14 @@ const cards = [
     darkColor: "bg-purple-900 text-purple-300",
   },
   {
-    title: "Location History",
-    href: "/dashboard/location",
-    icon: MapPin,
+    title: "Statistics",
+    href: "/dashboard/statistics",
+    icon: GitGraph,
     lightColor: "bg-blue-100 text-blue-800",
     darkColor: "bg-blue-900 text-blue-300",
   },
   {
-    title: "Attendance History",
+    title: "Attendance",
     href: "/dashboard/attendance",
     icon: UserCheck,
     lightColor: "bg-green-100 text-green-800",

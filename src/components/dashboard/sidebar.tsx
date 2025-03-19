@@ -11,7 +11,6 @@ import {
   UserCheck,
   Menu,
   X,
-  LogOut as LogOutIcon,
 } from "lucide-react";
 import { LogOut } from "../services/auth";
 import ScaleLoader from "@/components/loader/ScaleLoader";
@@ -19,10 +18,10 @@ import { motion } from "framer-motion";
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: Home },
-  { title: "Bus Tracking", href: "/dashboard/bus", icon: Bus },
   { title: "Statistics", href: "/dashboard/statistics", icon: BarChart3 },
   { title: "Our College", href: "/dashboard/college", icon: GraduationCap },
   { title: "Attendance", href: "/dashboard/attendance", icon: UserCheck },
+  { title: "Bus Tracking", href: "/dashboard/bus", icon: Bus },
   { title: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
