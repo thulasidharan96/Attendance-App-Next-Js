@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       screens: {
@@ -45,51 +46,6 @@ export default {
           light: "var(--purple1-light)",
           dark: "var(--purple1-dark)",
           darkest: "var(--purple1-darkest)",
-        },
-        base: {
-          green: {
-            DEFAULT: "var(--base-green)",
-            light: "var(--base-green-light)",
-            dark: "var(--base-green-dark)",
-            darkest: "var(--base-green-darkest)",
-          },
-          amber: {
-            DEFAULT: "var(--base-amber)",
-          },
-          amber2: {
-            DEFAULT: "var(--base-amber2)",
-          },
-          amber3: {
-            DEFAULT: "var(--base-amber3)",
-          },
-          blue: {
-            DEFAULT: "var(--base-blue)",
-          },
-          gray: {
-            DEFAULT: "var(--base-gray)",
-          },
-          failed: {
-            DEFAULT: "var(--base-failed)",
-          },
-          pink: {
-            DEFAULT: "var(--base-pink)",
-          },
-        },
-        heading: {
-          foreground: "var(--heading-foreground)",
-        },
-        text: {
-          foreground: "var(--text-foreground)",
-          dropdown: "var(--text-dropdown)",
-        },
-        tab: {
-          background: "var(--tab-background)",
-          text: "var(--tab-text)",
-        },
-        pie: {
-          ring: {
-            background: "var(--pie-ring-background)",
-          },
         },
       },
     },

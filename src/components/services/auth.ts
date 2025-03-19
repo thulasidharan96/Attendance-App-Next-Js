@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { getToken } from "./store";
 
 interface DecodedToken {
+  userId(arg0: string, userId: string): unknown;
   role?: string;
   exp?: number;
 }
@@ -28,7 +29,6 @@ export const LogOut = () => {
     );
   };
 
-  // Unregister service workers to clear cached pages (Ensures fresh login state)
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistrations().then((registrations) => {
       registrations.forEach((registration) => registration.unregister());
@@ -71,6 +71,8 @@ export const validate = (): void => {
       LogOut();
       return;
     }
+
+    localStorage.setItem("userId", String(decoded.userId));
 
     switch (decoded.role) {
       case "admin":

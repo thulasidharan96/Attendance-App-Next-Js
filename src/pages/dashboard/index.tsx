@@ -81,14 +81,14 @@ export default function DashboardPage() {
         />
 
         {/* Buttons Section */}
-        <div className="flex flex-row items-center justify-between gap-4 w-full">
+        <div className="flex flex-row items-center justify-end gap-4 w-full">
           <button
             onClick={handleAttendance}
             className={`${attendanceButtonClass} w-full md:w-auto px-4 py-2 text-lg`}
           >
             Mark Attendance
           </button>
-          <button className="flex items-center justify-center px-4 py-2 rounded-xl font-medium shadow-md transition-all text-white w-full md:w-auto bg-gray-600 hover:bg-gray-700">
+          <button className="flex items-center justify-center px-3 py-3.5 rounded-xl font-medium shadow-md transition-all text-white w-full md:w-auto bg-blue-600 hover:bg-blue-700">
             Hello
           </button>
         </div>
