@@ -70,20 +70,20 @@ export default function LocationButton() {
   const getIconColor = () => {
     switch (locationStatus) {
       case "nearby":
-        return "text-green-500 ml-2";
+        return "text-green-500 m-2";
       case "far":
-        return "text-red-500 ml-2";
+        return "text-red-500 m-2";
       case "checking":
-        return "text-blue-500 ml-2";
+        return "text-blue-500 m-2";
       case "unknown":
       default:
-        return "text-gray-500 ml-2";
+        return "text-gray-500 m-2";
     }
   };
 
   const getButtonClasses = () => {
     const baseClasses = "rounded-full transition duration-300";
-    const hoverClasses = "hover:bg-gray-100";
+    const hoverClasses = "hover:bg-gray-300 dark:hover:bg-gray-700";
     const activeClasses = locationStatus === "checking" ? "animate-pulse" : "";
 
     return `${baseClasses} ${hoverClasses} ${activeClasses}`;

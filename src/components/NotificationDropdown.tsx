@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Bell } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -46,17 +45,15 @@ export default function NotificationDropdown() {
 
   return (
     <div>
-      <Button
-        variant="ghost"
-        className="relative p-2 rounded-full"
+      <button
+        className="relative p-2 rounded-ful"
         onClick={() => setIsOpen(true)}
       >
-        <Bell className="h-6 w-6" />
-        <span className="sr-only">Open Notifications</span>
-        {notifications.length > 0 && (
+        <Bell className="h-5 w-5 " />
+        {/* {notifications.length > 0 && (
           <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full animate-pulse" />
-        )}
-      </Button>
+        )} */}
+      </button>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="w-full max-w-sm md:max-w-md bg-white dark:bg-gray-900">
           <DialogHeader>
@@ -78,7 +75,7 @@ export default function NotificationDropdown() {
                 ))}
               </ul>
             ) : (
-              <p className="p-3 text-center text-gray-500">
+              <p className="p-2 text-center text-gray-500">
                 No new notifications
               </p>
             )}

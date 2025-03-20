@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from "axios";
 import * as cookie from "cookie";
 import { getToken } from "@/components/services/store";

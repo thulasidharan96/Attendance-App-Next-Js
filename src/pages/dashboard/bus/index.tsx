@@ -1,6 +1,8 @@
 import { DashboardHeader } from "@/components/dashboard/header";
 import { Layout } from "@/components/layout";
-import React, { useState } from "react";
+import { isAuthenticated } from "@/components/services/auth";
+import Router from "next/router";
+import React, { useEffect, useState } from "react";
 
 const busData = [
   { id: 1, location: "Near Kovilpatti Bus Stand" },
@@ -31,6 +33,13 @@ const Index = () => {
       setLoading(false);
     }, 2000); // Simulated API call delay
   };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      Router.replace("/");
+      return;
+    }
+  }, []);
 
   return (
     <Layout>

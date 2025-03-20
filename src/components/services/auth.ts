@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { getToken } from "./store";
 
 interface DecodedToken {
+  email(email: string): string; // Replace 'any' with 'string'
   userId(arg0: string, userId: string): unknown;
   role?: string;
   exp?: number;
@@ -73,6 +74,7 @@ export const validate = (): void => {
     }
 
     localStorage.setItem("userId", String(decoded.userId));
+    localStorage.setItem("email", String(decoded.email));
 
     switch (decoded.role) {
       case "admin":

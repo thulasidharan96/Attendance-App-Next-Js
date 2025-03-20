@@ -1,86 +1,71 @@
+"use client";
+
 import { DashboardHeader } from "@/components/dashboard/header";
 import { Layout } from "@/components/layout";
 import { isAuthenticated } from "@/components/services/auth";
-import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 import Router from "next/router";
-import React, { useEffect, useState } from "react";
 
-const Index = () => {
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [avatar, setAvatar] = useState<string | null>(null);
-
-  // Handle file upload
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setAvatar(reader.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
+const StudentProfile = () => {
+  const [name, setName] = useState(localStorage.getItem("name") || "John Doe");
+  const [email] = useState(
+    localStorage.getItem("email") || "johndoe@example.com"
+  );
+  const [registerNumber] = useState(
+    localStorage.getItem("RegisterNumber") || "2025001"
+  );
+  const [phoneNumber] = useState("+1234567890");
+  const [address] = useState("123, Main Street, City");
+  const [dob] = useState("2000-01-01");
+  const [community] = useState("XXXX");
+  const [gender] = useState("XXXX");
 
   useEffect(() => {
     if (!isAuthenticated()) {
       Router.replace("/");
       return;
     }
-
-    setName(localStorage.getItem("name") || "User!");
+    setName(localStorage.getItem("name") || "User");
   }, []);
 
   return (
     <Layout>
       <DashboardHeader />
-      <div className="shadow-lg rounded-lg p-6">
-        {" "}
-        {/* Profile Section */}
-        <section className="mb-6">
-          <h2 className="text-xl font-semibold mb-4">Profile Settings</h2>
-          <div className="flex items-center mb-4">
-            <label className="mr-4">Avatar:</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleAvatarChange}
-              className="hidden"
-              id="avatar-upload"
-            />
-            <label htmlFor="avatar-upload" className="cursor-pointer">
-              {avatar ? (
-                <Image
-                  src={avatar}
-                  alt="Avatar"
-                  className="w-16 h-16 rounded-full border"
+      <Card className="w-full shadow-xl rounded-2xl bg-white dark:bg-gray-900 p-6">
+        <CardContent>
+          <h2 className="text-2xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">
+            Student Profile
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              ["Full Name", name],
+              ["Gender", gender],
+              ["Register Number", registerNumber],
+              ["Email Address", email],
+              ["Date of Birth", dob],
+              ["Phone Number", phoneNumber],
+              ["Address", address],
+              ["Community", community],
+            ].map(([label, value]) => (
+              <div key={label} className="grid gap-1">
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {label}
+                </Label>
+                <Input
+                  value={value}
+                  disabled
+                  className="bg-gray-100 dark:bg-gray-800 dark:text-gray-200 text-end"
                 />
-              ) : (
-                <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
-                  📷
-                </div>
-              )}
-            </label>
+              </div>
+            ))}
           </div>
-          <div>
-            <label className="block mb-2">Full Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div className="mt-4">
-            <label className="block mb-2">Email Address:</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-        </section>
-      </div>
+        </CardContent>
+      </Card>
     </Layout>
   );
 };
-export default Index;
+
+export default StudentProfile;
