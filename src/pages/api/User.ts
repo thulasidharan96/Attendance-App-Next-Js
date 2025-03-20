@@ -1,10 +1,23 @@
-import { getToken } from "@/components/services/store";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import * as cookie from "cookie";
+import { getToken } from "@/components/services/store";
 
+const BASE_URL = "https://rest-api-hp0n.onrender.com/user";
+const ATTENDANCE_URL = "https://rest-api-hp0n.onrender.com/attendance";
 const LOGIN_URL = "https://rest-api-hp0n.onrender.com/user/login";
 
-// Login API
+interface ApiResponse<T> {
+  status: number;
+  data: T;
+}
+
+interface RegisterData {
+  email: string;
+  password: string;
+  name: string;
+  RegisterNumber: string;
+}
+
 export const LoginApi = async (email: string, password: string) => {
   const data = { email, password };
 
@@ -30,80 +43,71 @@ export const LoginApi = async (email: string, password: string) => {
   }
 };
 
-const REGISTER_URL = "https://rest-api-hp0n.onrender.com/user/signup";
-
-// Register API
 export const RegisterApi = async (
-  email: string,
-  password: string,
-  name: string,
-  RegisterNumber: string
-) => {
-  const data = { email, password, name, RegisterNumber };
+  data: RegisterData
+): Promise<ApiResponse<unknown> | undefined> => {
   try {
-    const response = await axios.post(REGISTER_URL, data);
+    const response: AxiosResponse<unknown> = await axios.post(
+      `${BASE_URL}/signup`,
+      data
+    );
     return response;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 409) {
       return error.response;
     }
+    console.error("Unexpected error:", error);
     throw error;
   }
 };
 
-// Get User Attendance API
-export const UserApi = async () => {
+export const UserApi = async (): Promise<AxiosResponse | undefined> => {
   const userId = localStorage.getItem("userId");
-  const USER_URL = `https://rest-api-hp0n.onrender.com/attendance/${userId}`;
+  if (!userId) throw new Error("User ID is missing");
   const token = getToken();
-  return await axios.get(USER_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  if (!token) throw new Error("Authentication token is missing");
+  try {
+    return await axios.get(`${ATTENDANCE_URL}/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
 };
 
-export const getRecentLeaveStatus = async () => {
-  const token = getToken();
+export const getRecentLeaveStatus = async (): Promise<unknown> => {
   const userId = localStorage.getItem("userId");
+  const token = getToken();
 
-  if (!token) {
-    throw new Error("Missing authentication token");
-  }
+  if (!token || !userId)
+    throw new Error("Missing authentication token or userId");
 
   try {
-    const response = await axios.get(
-      `https://rest-api-hp0n.onrender.com/attendance/leave/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.get(`${ATTENDANCE_URL}/leave/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
-  } catch (error: unknown) {
-    // Type guard to check if error is an axios error
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        // Handle known HTTP errors
-        console.error(
-          `Error (${error.response.status}): ${error.response.data}`
-        );
-      } else if (error.request) {
-        // Network error or no response from server
-        console.error("Network error:", error.request);
-      } else {
-        // Handle other axios errors
-        console.error("Unexpected error:", error.message);
-      }
-    } else {
-      // Handle non-axios errors
-      console.error(
-        "Unexpected error:",
-        error instanceof Error ? error.message : String(error)
-      );
-    }
+  } catch (error) {
+    console.error("Error fetching leave status:", error);
+    throw error;
+  }
+};
+
+export const getUserMessages = async (): Promise<unknown> => {
+  const userId = localStorage.getItem("userId");
+  const token = getToken();
+
+  if (!token || !userId)
+    throw new Error("Missing authentication token or userId");
+
+  try {
+    const response = await axios.get(`${ATTENDANCE_URL}/message/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user messages:", error);
     throw error;
   }
 };

@@ -93,12 +93,17 @@ export default function Home() {
   ) => {
     try {
       setIsLoading(true);
-      const response = await RegisterApi(email, password, name, RegisterNumber);
+      const response = await RegisterApi({
+        email,
+        password,
+        name,
+        RegisterNumber,
+      });
 
-      if (response.status === 200) {
+      if (response?.status === 200) {
         alert("Registration successful");
         Router.push("/");
-      } else if (response.status === 409) {
+      } else if (response?.status === 409) {
         alert("User already exists");
       }
     } catch (error) {

@@ -4,6 +4,17 @@ import { getRecentLeaveStatus } from "@/pages/api/User";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+// Define API response type
+interface LeaveRequestResponse {
+  recentLeaveRequest?: {
+    StartDate: string;
+    EndDate: string;
+    Reason?: string;
+    status?: string;
+  };
+}
+
+// Define local state type
 interface LeaveRequest {
   startDate: string;
   endDate: string;
@@ -19,7 +30,7 @@ const LeaveStatus = () => {
   const fetchLeaveStatus = async () => {
     setLoading(true);
     try {
-      const response = await getRecentLeaveStatus();
+      const response = (await getRecentLeaveStatus()) as LeaveRequestResponse;
       if (response?.recentLeaveRequest) {
         const { StartDate, EndDate, Reason, status } =
           response.recentLeaveRequest;
@@ -39,7 +50,6 @@ const LeaveStatus = () => {
       setLoading(false);
     }
   };
-
   const getStatusClasses = (status: string): string => {
     switch (status) {
       case "Approved":

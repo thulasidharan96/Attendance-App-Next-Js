@@ -1,12 +1,13 @@
 "use client";
 
-import { MoonIcon, SunIcon, Bell, Search } from "lucide-react";
+import { MoonIcon, SunIcon, Search } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import LocationButton from "../ui/locationBtn";
 import Image from "next/image";
 import Frame from "@/assets/Student_Avatar.svg";
 import { useThemeStyles } from "@/components/Hook/useThemeStyles"; // Import the hook
+import NotificationDropdown from "../NotificationDropdown";
 
 export function DashboardHeader() {
   const { setTheme } = useTheme();
@@ -51,8 +52,7 @@ export function DashboardHeader() {
           <button
             className={`rounded-full p-2 transition-colors duration-300 ${themeStyles.text} ${themeStyles.hoverBg}`}
           >
-            <Bell className="h-5 w-5" />
-            <span className="sr-only">Notifications</span>
+            <NotificationDropdown />
           </button>
           <div className="relative h-8 w-8 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
             <Image
