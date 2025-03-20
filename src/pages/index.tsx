@@ -15,6 +15,7 @@ import {
 } from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
 import Router from "next/router";
+import router from "next/router";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -473,6 +474,12 @@ export default function Home() {
             </form>
           </motion.div>
         </motion.div>
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          onClick={() => router.push("/onboarding")}
+        >
+          OnBoarding
+        </button>
       </div>
     </div>
   );
