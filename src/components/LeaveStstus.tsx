@@ -3,6 +3,7 @@ import { RefreshCw } from "lucide-react";
 import { getRecentLeaveStatus } from "@/pages/api/User";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useThemeStyles } from "@/components/Hook/useThemeStyles";
 
 // Define API response type
 interface LeaveRequestResponse {
@@ -26,6 +27,7 @@ const LeaveStatus = () => {
   const [showLeaveStatus, setShowLeaveStatus] = useState<boolean>(false);
   const [leaveData, setLeaveData] = useState<LeaveRequest | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { themeStyles } = useThemeStyles();
 
   const fetchLeaveStatus = async () => {
     setLoading(true);
@@ -66,7 +68,7 @@ const LeaveStatus = () => {
   return (
     <div className="flex flex-col items-center gap-2 p-2">
       <Button
-        className="font-medium py-2 px-4 rounded-lg shadow-md bg-orange-500"
+        className={`font-medium py-2 px-4 rounded-lg shadow-md bg-blue-500`}
         onClick={() => {
           setShowLeaveStatus(true);
           fetchLeaveStatus();
@@ -75,9 +77,14 @@ const LeaveStatus = () => {
       >
         {loading ? "Loading..." : "Leave Status"}
       </Button>
+
       {showLeaveStatus && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-80 z-50 p-4">
-          <Card className="w-96 shadow-lg rounded-lg">
+        <div
+          className={`fixed inset-0 flex items-center justify-center z-50 p-4 bg-opacity-10`}
+        >
+          <Card
+            className={`w-96 shadow-lg rounded-lg  ${themeStyles.background} ${themeStyles.text}`}
+          >
             <CardHeader>
               <CardTitle className="text-center">
                 Leave Request Status
@@ -85,7 +92,9 @@ const LeaveStatus = () => {
             </CardHeader>
             <CardContent>
               {loading ? (
-                <p className="text-center text-gray-700 dark:text-gray-300">
+                <p
+                  className={`text-center transition-colors ${themeStyles.text}`}
+                >
                   Fetching leave status...
                 </p>
               ) : leaveData ? (
@@ -112,10 +121,13 @@ const LeaveStatus = () => {
                   </p>
                 </div>
               ) : (
-                <p className="text-center text-gray-500 dark:text-gray-400">
+                <p
+                  className={`text-center transition-colors ${themeStyles.inputBg}`}
+                >
                   No Previous Leave Data
                 </p>
               )}
+
               <div className="flex justify-end gap-3 mt-4">
                 <Button
                   variant="secondary"

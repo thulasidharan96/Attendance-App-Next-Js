@@ -111,3 +111,53 @@ export const getUserMessages = async (): Promise<unknown> => {
     throw error;
   }
 };
+
+export const LeaveRequest = async (data: any) => {
+  const token = getToken();
+  const RegisterNumber = localStorage.getItem("RegisterNumber");
+  const userId = localStorage.getItem("userId");
+  const dept = localStorage.getItem("department");
+
+  if (!token) {
+    throw new Error("Missing authentication token");
+  }
+  if (!RegisterNumber) {
+    throw new Error("Missing RegisterNumber");
+  }
+
+  try {
+    const response = await axios.post(
+      `https://rest-api-hp0n.onrender.com/user/leave`,
+      {
+        StartDate: data.fromDate,
+        EndDate: data.toDate,
+        Reason: data.reason,
+        RegisterNumber: RegisterNumber,
+        userId: userId,
+        Department: dept,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      // Return the error response so we can handle it in the UI
+      return {
+        status: error.response.status,
+        message: error.response.data.message || "Request failed",
+        data: error.response.data,
+      };
+    } else if (error.request) {
+      console.error("Network error:", error.request);
+      throw new Error("Network error. Please check your connection.");
+    } else {
+      console.error("Unexpected error:", error.message);
+      throw new Error("An unexpected error occurred.");
+    }
+  }
+};
