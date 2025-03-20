@@ -10,13 +10,9 @@ import { useEffect, useState } from "react";
 import Router from "next/router";
 
 const StudentProfile = () => {
-  const [name, setName] = useState(localStorage.getItem("name") || "John Doe");
-  const [email] = useState(
-    localStorage.getItem("email") || "johndoe@example.com"
-  );
-  const [registerNumber] = useState(
-    localStorage.getItem("RegisterNumber") || "2025001"
-  );
+  const [name, setName] = useState("John Doe");
+  const [email, setEmail] = useState("johndoe@example.com");
+  const [registerNumber, setRegisterNumber] = useState("2025001");
   const [phoneNumber] = useState("+1234567890");
   const [address] = useState("123, Main Street, City");
   const [dob] = useState("2000-01-01");
@@ -29,6 +25,8 @@ const StudentProfile = () => {
       return;
     }
     setName(localStorage.getItem("name") || "User");
+    setEmail(localStorage.getItem("email") || "user@example.com");
+    setRegisterNumber(localStorage.getItem("RegisterNumber") || "2025001");
   }, []);
 
   return (
