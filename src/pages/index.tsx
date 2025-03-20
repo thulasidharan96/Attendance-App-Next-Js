@@ -15,6 +15,7 @@ import {
 } from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
 import Router from "next/router";
+import FingerprintAuth from "@/components/services/FingerprintAuth";
 
 export default function Home() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -473,6 +474,7 @@ export default function Home() {
             </form>
           </motion.div>
         </motion.div>
+        <FingerprintAuth />
       </div>
     </div>
   );
