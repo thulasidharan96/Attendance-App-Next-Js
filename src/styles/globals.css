@@ -71,7 +71,6 @@ html,
 body {
   @apply font-sans;
   height: 100%;
-  overflow: hidden !important;
 }
 
 @layer utilities {

@@ -2,38 +2,58 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
-  // Get auth_token from cookies
   const authToken = req.cookies.get("auth_token")?.value;
-  const userRole = req.cookies.get("role")?.value; // Assuming role is stored in cookies
-  const onboard = req.cookies.get("onboard")?.value; // Assuming onboard is stored in cookies
+  const userRole = req.cookies.get("role")?.value;
+  const onboard = req.cookies.get("onboard")?.value;
 
-  // Define protected routes
-  const protectedRoutes = ["/dashboard", "/admin", "/validate"];
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    req.nextUrl.pathname.startsWith(route)
-  );
+  const pathname = req.nextUrl.pathname;
 
-  if (!authToken && isProtectedRoute) {
-    // If no token & trying to access a protected route, redirect to "/"
-    return NextResponse.redirect(new URL("/", req.url));
+  // ✅ Define protected routes
+  const isDashboardRoute = pathname.startsWith("/dashboard");
+  const isAdminRoute = pathname.startsWith("/admin");
+  const isOnboardRoute = pathname.startsWith("/onboard");
+
+  // 🚨 Redirect logged-out users away from protected routes
+  if (!authToken) {
+    if (isDashboardRoute || isAdminRoute || isOnboardRoute) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+    return NextResponse.next();
   }
-  // Redirect
-  if (authToken && onboard === "false") {
+
+  // 🚨 Prevent onboarded users from accessing `/onboard`
+  if (onboard === "true" && isOnboardRoute) {
+    return NextResponse.redirect(
+      new URL(userRole === "admin" ? "/admin" : "/dashboard", req.url)
+    );
+  }
+
+  // 🚨 Prevent non-admin users from accessing `/admin` or any subroutes (`/admin/*`)
+  if (userRole !== "admin" && isAdminRoute) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  // 🚨 Prevent admin users from accessing `/dashboard` or any subroutes (`/dashboard/*`)
+  if (userRole === "admin" && isDashboardRoute) {
+    return NextResponse.redirect(new URL("/admin", req.url));
+  }
+
+  // 🚨 If user is authenticated but NOT onboarded, redirect them to `/onboard`
+  if (onboard === "false" && !isOnboardRoute) {
     return NextResponse.redirect(new URL("/onboard", req.url));
   }
-  // Redirect authenticated users from `/` (acting as the login page)
-  if (authToken && req.nextUrl.pathname === "/") {
-    if (userRole === "admin") {
-      return NextResponse.redirect(new URL("/admin", req.url));
-    } else {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
-    }
+
+  // 🚨 Redirect authenticated users away from `/` (login page)
+  if (pathname === "/") {
+    return NextResponse.redirect(
+      new URL(userRole === "admin" ? "/admin" : "/dashboard", req.url)
+    );
   }
 
   return NextResponse.next();
 }
 
-// Apply middleware to all routes except `/`
+// ✅ Exclude Next.js assets & API routes from middleware execution
 export const config = {
-  matcher: ["/((?!^/$).*)"], // Match everything except `/`
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

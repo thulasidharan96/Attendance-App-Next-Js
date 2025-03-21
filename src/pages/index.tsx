@@ -14,9 +14,10 @@ import {
   userId,
 } from "@/components/services/store";
 import { isAuthenticated } from "@/components/services/auth";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<User>({
@@ -102,7 +103,7 @@ export default function Home() {
 
       if (response?.status === 200) {
         alert("Registration successful");
-        Router.push("/");
+        router.push("/");
       } else if (response?.status === 409) {
         alert("User already exists");
       }
@@ -127,7 +128,7 @@ export default function Home() {
         userId(data.id);
         department(data.department);
         if (isAuthenticated()) {
-          Router.push("/validate");
+          router.push("/validate");
         } else {
           alert("Login failed. Please try again.");
         }
@@ -194,7 +195,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      Router.push("/validate");
+      router.push("/validate");
     }
   }, []);
 

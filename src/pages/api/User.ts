@@ -85,6 +85,7 @@ export const getRecentLeaveStatus = async (): Promise<unknown> => {
     throw new Error("Missing authentication token or userId");
 
   try {
+    // Check if this is the correct endpoint structure
     const response = await axios.get(`${ATTENDANCE_URL}/leave/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -1,6 +1,7 @@
 import Router from "next/router";
 import { jwtDecode } from "jwt-decode";
 import { getToken } from "./store";
+import * as cookie from "cookie";
 
 interface DecodedToken {
   email(email: string): string; // Replace 'any' with 'string'
@@ -22,6 +23,9 @@ export const LogOut = () => {
   // Clear authentication data
   document.cookie =
     "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  document.cookie = "role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  document.cookie = "onboard=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
   localStorage.clear();
   sessionStorage.clear();
 
@@ -62,11 +66,6 @@ export const LogOut = () => {
 export const validate = (): void => {
   const token = getToken();
 
-  if (!isAuthenticated()) {
-    Router.push("/");
-    return;
-  }
-
   try {
     if (!token) {
       console.error("No token found!");
@@ -81,22 +80,27 @@ export const validate = (): void => {
       return;
     }
 
-    if (!decoded.onboard) {
-      Router.push("/onboard");
-    }
-
     localStorage.setItem("userId", String(decoded.userId));
     localStorage.setItem("email", String(decoded.email));
 
-    switch (decoded.role) {
-      case "admin":
-        Router.push("/admin");
-        break;
-      case "user":
-        Router.push("/dashboard");
-        break;
-      default:
-        Router.push("/");
+    // Set cookies for role and onboard status
+    document.cookie = cookie.serialize("role", String(decoded.role), {
+      path: "/",
+      maxAge: 1200, // 20 minutes
+    });
+
+    document.cookie = cookie.serialize("onboard", String(decoded.onboard), {
+      path: "/",
+      maxAge: 1200, // 20 minutes
+    });
+
+    // Redirect based on onboard and role
+    if (!decoded.onboard) {
+      Router.push("/onboard");
+    } else if (decoded.role === "admin") {
+      Router.push("/admin");
+    } else if (decoded.role === "user") {
+      Router.push("/dashboard");
     }
   } catch (error) {
     console.error("Invalid token:", error);

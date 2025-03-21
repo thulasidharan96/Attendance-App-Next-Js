@@ -13,7 +13,7 @@ export default function DashboardPage() {
 
   return (
     <Layout>
-      <DashboardHeader />
+      {/* <DashboardHeader /> */}
       <div className="flex flex-wrap gap-4">
         <div className="w-full">
           <WelcomeCard
