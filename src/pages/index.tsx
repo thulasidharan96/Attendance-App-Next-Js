@@ -25,6 +25,7 @@ export default function Home() {
     name: "",
     email: "",
     password: "",
+    department: "",
   });
 
   const checkPasswordStrength = (
@@ -78,7 +79,8 @@ export default function Home() {
         formData.email,
         formData.password,
         formData.name,
-        formData.RegisterNumber
+        formData.RegisterNumber,
+        formData.department
       );
     } else {
       handleSignIn(formData.email, formData.password);
@@ -90,20 +92,22 @@ export default function Home() {
     email: string,
     password: string,
     name: string,
-    RegisterNumber: string
+    RegisterNumber: string,
+    department: string
   ) => {
     try {
       setIsLoading(true);
+      console.log(email, password, name, RegisterNumber, department);
       const response = await RegisterApi({
         email,
         password,
         name,
         RegisterNumber,
+        department,
       });
-
-      if (response?.status === 200) {
+      if (response?.status === 201) {
         alert("Registration successful");
-        router.push("/");
+        router.push("/validate");
       } else if (response?.status === 409) {
         alert("User already exists");
       }
@@ -227,7 +231,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <div className="w-full md:w-1/2 flex flex-col mt-10 md:mt-0 p-4 md:p-0 m-2 md:m-0">
+      <div className="w-full md:w-1/2 flex flex-col m-0 md:mt-0 p-2 md:p-0 md:m-0">
         {/* Logo */}
         <motion.p
           className="text-purple1 text-9xl font-bold text-center"
@@ -417,6 +421,37 @@ export default function Home() {
                     whileFocus={{ scale: 1.01, borderColor: "#8B5CF6" }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   />
+                </motion.div>
+              )}
+              {isSignUp && (
+                <motion.div
+                  variants={slideVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <label
+                    htmlFor="department"
+                    className="block text-xs font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Department
+                  </label>
+                  <motion.select
+                    id="department"
+                    name="department"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        department: e.target.value,
+                      })
+                    }
+                    className="w-full px-2 py-1 bg-white dark:bg-gray-800 text-black dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="">Select Department</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="MECH">MECH</option>
+                  </motion.select>
                 </motion.div>
               )}
 

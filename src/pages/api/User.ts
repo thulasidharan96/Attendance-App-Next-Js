@@ -17,6 +17,7 @@ interface RegisterData {
   password: string;
   name: string;
   RegisterNumber: string;
+  department: string;
 }
 
 export const LoginApi = async (email: string, password: string) => {
@@ -109,8 +110,12 @@ export const getUserMessages = async (): Promise<unknown> => {
     });
     return response.data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      console.warn("No messages found for user:", userId);
+      return []; // Return empty array instead of throwing an error
+    }
     console.error("Error fetching user messages:", error);
-    throw error;
+    throw error; // Re-throw other errors
   }
 };
 
