@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { validate } from "@/components/services/auth";
 
 const OnboardUser = () => {
   const [formData, setFormData] = useState({
@@ -21,11 +22,13 @@ const OnboardUser = () => {
   });
 
   useEffect(() => {
+    validate();
+
     setFormData((prevData) => ({
       ...prevData,
       name: localStorage.getItem("name") || "",
       email: localStorage.getItem("email") || "",
-      registerNumber: localStorage.getItem("registerNumber") || "",
+      registerNumber: localStorage.getItem("RegisterNumber") || "",
     }));
   }, []);
 
@@ -41,21 +44,21 @@ const OnboardUser = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-purple1 p-4 overflow-auto">
+    <div className="min-h-screen w-full flex items-center justify-center bg-purple1 p-4 ">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         className="w-full max-w-3xl"
       >
-        <Card className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg ring-1 ring-gray-200 dark:ring-gray-700">
+        <Card className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg ring-1 ring-gray-200 dark:ring-gray-700 h-[80%]">
           <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-4 sm:mb-6">
             Welcome! Please Fill in the Form
           </h2>
           <CardContent>
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 overflow-y-auto max-h-[75vh] px-2"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 overflow-y-auto px-2"
             >
               {[
                 {

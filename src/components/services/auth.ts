@@ -7,11 +7,15 @@ interface DecodedToken {
   userId(arg0: string, userId: string): unknown;
   role?: string;
   exp?: number;
+  onboard: boolean;
 }
 
 export const isAuthenticated = (): boolean => {
   const token = getToken();
-  return !!token; // ✅ Simply return true/false, don't push a route
+  if (token) {
+    return true;
+  }
+  return false; // ✅ Simply return true/false, don't push a route
 };
 
 export const LogOut = () => {
@@ -58,19 +62,27 @@ export const LogOut = () => {
 export const validate = (): void => {
   const token = getToken();
 
-  if (!token) {
-    console.error("No token found!");
+  if (!isAuthenticated()) {
     Router.push("/");
     return;
   }
 
   try {
-    const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+    if (!token) {
+      console.error("No token found!");
+      Router.push("/");
+      return;
+    }
 
+    const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
     if (!decoded.exp || Date.now() >= decoded.exp * 1000) {
       console.error("Token has expired");
       LogOut();
       return;
+    }
+
+    if (!decoded.onboard) {
+      Router.push("/onboard");
     }
 
     localStorage.setItem("userId", String(decoded.userId));

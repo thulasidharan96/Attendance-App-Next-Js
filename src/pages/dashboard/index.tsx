@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import Router from "next/router";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { DashboardCards } from "@/components/dashboard/cards";
 import { WelcomeCard } from "@/components/dashboard/welcome-card";
 import { Layout } from "@/components/layout";
-import { isAuthenticated } from "@/components/services/auth";
+import { validate } from "@/components/services/auth";
 import {
   FIXED_LOCATION,
   PROXIMITY_THRESHOLD,
@@ -41,11 +40,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
-      Router.replace("/");
-      return;
-    }
-
+    validate();
     setName(localStorage.getItem("name") || "User!");
     handleLocation();
   }, [handleLocation]);
